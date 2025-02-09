@@ -1,7 +1,7 @@
 <template>
 <div class="frame">
     <Weather/>
-<!--    <Advertisement/>-->
+    <Advertisement/>
 </div>
 </template>
 
