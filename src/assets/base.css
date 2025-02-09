@@ -1,0 +1,18 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+}
+@font-face {
+  font-family: "Gilroy";
+  src: url("/fonts/Gilroy-Heavy.woff") format("woff");
+}
+
+:root {
+  --animation-duration: 12s;
+  font-size: calc(2.60417 * 1vw);
+  font-family: Gilroy, sans-serif;
+}
