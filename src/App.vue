@@ -1,13 +1,48 @@
 <template>
     <div class="frame">
-        <TopPart class="frame__top" />
-        <BottomPart class="frame__bottom" />
+        <div class="frame__top">
+            <TopPart :top-data="topData" />
+        </div>
+        <div class="frame__bottom">
+            <BottomPart :bottom-data="bottomData" />
+        </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import TopPart from '@/components/TopPart.vue';
-import BottomPart from '@/components/BottomPart.vue';
+import TopPart from '@/components/TopPart/TopPart.vue';
+import BottomPart from '@/components/BottomPart/BottomPart.vue';
+
+export interface TopData {
+    componentsList: string[];
+    animationDuration: number;
+}
+
+export interface BottomData {
+    imagesList: string[];
+    animationDuration: number;
+}
+
+//Здесь можно получить данные с сервера
+const bottomData: BottomData = {
+    imagesList: [
+        // список баннеров, которые показываем
+        // "my-car-banner",
+        // "astana-motors-banner",
+        'nutcracker-banner',
+    ],
+    animationDuration: 2000,
+};
+
+const topData: TopData = {
+    componentsList: [
+        // список компонентов, которые показываем
+        'traffics',
+        // "currency",
+        // "weather"
+    ],
+    animationDuration: 3000,
+};
 </script>
 
 <style scoped>
@@ -19,10 +54,14 @@ import BottomPart from '@/components/BottomPart.vue';
     background: black;
     overflow: hidden;
 }
+
 .frame__top {
-    flex-grow: 4;
+    height: 40vh;
+    position: relative;
 }
+
 .frame__bottom {
-    flex-grow: 6;
+    height: 60vh;
+    position: relative;
 }
 </style>
