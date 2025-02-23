@@ -5,7 +5,7 @@ export interface TerminalData {
 
 export interface TopPart {
     widgets: {
-        weather: WeatherWidgetData; // ключи - словарь, по которому определяется компонент
+        weather: WeatherWidgetData; // ключи - словарь, по которому определяется компонент. Отобразятся только те компоненты, которые переданы
         traffics: TrafficsWidgetData;
         currency: CurrencyWidgetData;
     };
