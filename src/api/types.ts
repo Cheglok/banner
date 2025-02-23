@@ -1,6 +1,6 @@
 export interface TerminalData {
-    topPart: TopPart;
-    bottomPart: BottomPart;
+    topPart: TopPart; // виджеты
+    bottomPart: BottomPart; // баннеры
 }
 
 export interface TopPart {
@@ -9,19 +9,19 @@ export interface TopPart {
         traffics: TrafficsWidgetData;
         currency: CurrencyWidgetData;
     };
-    animationDuration: number;
+    animationDuration: number; // время между сменами виджетов
 }
 
 export interface BottomPart {
-    banners: string[]; //названия соответствуют названиям картинок
+    banners: string[]; //названия соответствуют названиям картинок (astana-motors-banner.png)
     animationDuration: number;
 }
 
 export interface WeatherWidgetData {
-    title: string;
-    date: string;
+    title: string; // Погода в Астане / Погода завтра
+    date: string; // Среда, 15 января
     temperature: number;
-    description: string;
+    description: string; // Облачно
     days: WeatherDay[];
 }
 
