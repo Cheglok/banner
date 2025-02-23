@@ -1,5 +1,5 @@
 <template>
-    <div class="currency">
+    <div v-if="data" class="currency">
         <h2 class="currency-heading">Курсы валют</h2>
         <table class="table">
             <thead>
@@ -11,7 +11,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(currency, currencyName) in currency_rates">
+                <tr v-for="(currency, currencyName) in currencyRates" :key="currencyName">
                     <td>
                         <div class="cell_currency">
                             <component :is="`${currencyName}Icon`" class="currency-icon" />
@@ -33,20 +33,13 @@
 </template>
 
 <script setup lang="ts">
-const currency_rates = {
-    usd: {
-        sell: 508.0,
-        buy: 507.5,
-    },
-    eur: {
-        sell: 532.0,
-        buy: 531.5,
-    },
-    rub: {
-        sell: 5.88,
-        buy: 5.85,
-    },
-};
+import { computed } from 'vue';
+import { CurrencyWidgetData } from '@/api/types.ts';
+const props = defineProps<{
+    data: CurrencyWidgetData;
+}>();
+
+const currencyRates = computed(() => props.data.currency_rates);
 </script>
 
 <style scoped lang="scss">

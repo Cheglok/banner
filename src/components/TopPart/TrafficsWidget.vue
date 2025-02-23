@@ -1,21 +1,25 @@
 <template>
-    <div class="traffics">
-        <h2 class="weather-heading">Дорожная ситуация <span>cейчас</span></h2>
+    <div v-if="data" class="traffics">
+        <h2 class="traffics__heading">Дорожная ситуация <span>cейчас</span></h2>
         <div class="traffics__content">
             Пробки
             <span class="traffic__current">
-                {{ traffic.traffic_level }}
+                {{ trafficsData.level }}
             </span>
             баллов
         </div>
-        <h2 class="weather-heading">Средняя загрузка на дорогах</h2>
+        <h2 class="traffics__heading">{{ trafficsData.description }}</h2>
     </div>
 </template>
 
 <script setup lang="ts">
-const traffic = {
-    traffic_level: 1,
-};
+import { TrafficsWidgetData } from '@/api/types.ts';
+
+const props = defineProps<{
+    data: TrafficsWidgetData;
+}>();
+
+const trafficsData = props.data;
 </script>
 
 <style scoped lang="scss">
@@ -34,10 +38,10 @@ const traffic = {
     align-items: center;
 }
 
-.weather-heading {
+.traffics__heading {
     font-size: 2.4rem;
     font-weight: 700;
-    margin: 0 0 1.4rem;
+    margin: 0;
 
     span {
         text-decoration: underline;

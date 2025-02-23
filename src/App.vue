@@ -1,10 +1,10 @@
 <template>
     <div class="frame">
         <div class="frame__top">
-            <TopPart :top-data="topData" />
+            <TopPart :top-data="bannerData.topPart" />
         </div>
         <div class="frame__bottom">
-            <BottomPart :bottom-data="bottomData" />
+            <BottomPart :bottom-data="bannerData.bottomPart" />
         </div>
     </div>
 </template>
@@ -12,37 +12,9 @@
 <script setup lang="ts">
 import TopPart from '@/components/TopPart/TopPart.vue';
 import BottomPart from '@/components/BottomPart/BottomPart.vue';
+import { mockData } from '@/api/mockData.ts';
 
-export interface TopData {
-    componentsList: string[];
-    animationDuration: number;
-}
-
-export interface BottomData {
-    imagesList: string[];
-    animationDuration: number;
-}
-
-//Здесь можно получить данные с сервера
-const bottomData: BottomData = {
-    imagesList: [
-        // список баннеров, которые показываем
-        // "my-car-banner",
-        // "astana-motors-banner",
-        'nutcracker-banner',
-    ],
-    animationDuration: 2000,
-};
-
-const topData: TopData = {
-    componentsList: [
-        // список компонентов, которые показываем
-        'traffics',
-        // "currency",
-        // "weather"
-    ],
-    animationDuration: 3000,
-};
+const bannerData = mockData; // TODO: получать данные из АПИ
 </script>
 
 <style scoped>

@@ -1,7 +1,7 @@
 <template>
-    <template v-for="(image, index) in bottomData.imagesList" :key="index">
+    <template v-for="(banners, index) in bottomData.banners" :key="index">
         <img
-            :src="`/images/${image}.png`"
+            :src="`/images/${banners}`"
             :class="[
                 'bottom-banner',
                 { 'active-image': index === currentIndex, 'inactive-image': index !== currentIndex },
@@ -13,17 +13,17 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import { BottomData } from '@/App.vue';
+import { BottomPart } from '@/api/types.ts';
 
 const props = defineProps<{
-    bottomData: BottomData;
+    bottomData: BottomPart;
 }>();
 
 const currentIndex = ref(0);
 
 onMounted(() => {
     setInterval(() => {
-        currentIndex.value = (currentIndex.value + 1) % props.bottomData.imagesList.length;
+        currentIndex.value = (currentIndex.value + 1) % props.bottomData.banners.length;
     }, props.bottomData.animationDuration);
 });
 </script>
@@ -35,6 +35,7 @@ onMounted(() => {
     object-fit: cover;
     position: absolute;
     opacity: 1;
+    border-radius: 2.2rem;
 }
 
 .active-image {

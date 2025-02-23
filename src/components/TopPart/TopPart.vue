@@ -1,33 +1,34 @@
 <template>
     <Transition>
-        <Weather v-show="currentComponent === 'weather'" />
+        <WeatherWidget v-show="currentComponent === 'weather'" :data="topData.widgets.weather" />
     </Transition>
     <Transition>
-        <Currency v-show="currentComponent === 'currency'" />
+        <CurrencyWidget v-show="currentComponent === 'currency'" :data="topData.widgets.currency" />
     </Transition>
     <Transition>
-        <Traffics v-show="currentComponent === 'traffics'" />
+        <TrafficsWidget v-show="currentComponent === 'traffics'" :data="topData.widgets.traffics" />
     </Transition>
 </template>
 
 <script setup lang="ts">
-import Currency from '@/components/TopPart/Currency.vue';
-import Traffics from '@/components/TopPart/Traffics.vue';
+import CurrencyWidget from '@/components/TopPart/CurrencyWidget.vue';
+import TrafficsWidget from '@/components/TopPart/TrafficsWidget.vue';
 import { computed, onMounted, ref } from 'vue';
-import Weather from '@/components/TopPart/Weather.vue';
-import { TopData } from '@/App.vue';
+import WeatherWidget from '@/components/TopPart/WeatherWidget.vue';
+
+import { TopPart } from '@/api/types.ts';
 
 const props = defineProps<{
-    topData: TopData;
+    topData: TopPart;
 }>();
 
-const currentComponent = computed(() => props.topData.componentsList[currentIndex.value]);
+const currentComponent = computed(() => Object.keys(props.topData.widgets)[currentIndex.value]);
 
 const currentIndex = ref(0);
 
 onMounted(() => {
     setInterval(() => {
-        currentIndex.value = (currentIndex.value + 1) % props.topData.componentsList.length;
+        currentIndex.value = (currentIndex.value + 1) % Object.keys(props.topData.widgets).length;
     }, props.topData.animationDuration);
 });
 </script>
