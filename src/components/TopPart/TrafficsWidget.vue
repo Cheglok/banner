@@ -1,5 +1,5 @@
 <template>
-    <div v-if="data" class="traffics" :class="{ 'full-height': isFullHeight }" @click="isFullHeight = !isFullHeight">
+    <div v-if="data" class="traffics">
         <h2 class="traffics__heading">Дорожная ситуация <span>cейчас</span></h2>
         <div class="traffics__content">
             Пробки
@@ -17,14 +17,12 @@
 
 <script setup lang="ts">
 import { TrafficsWidgetData } from '@/api/types.ts';
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 import { pluralizeRussian } from '@/helpers/pluralizeWord.ts';
 
 const props = defineProps<{
     data: TrafficsWidgetData;
 }>();
-
-const isFullHeight = ref(false);
 
 const trafficsData = props.data;
 
