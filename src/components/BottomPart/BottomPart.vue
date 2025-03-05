@@ -1,7 +1,7 @@
 <template>
-    <template v-for="(banners, index) in bottomData.banners" :key="index">
+    <template v-for="(banner, index) in bottomData.banners" :key="index">
         <img
-            :src="`/images/${banners}`"
+            :src="`/images/banners/${banner}`"
             :class="[
                 'bottom-banner',
                 { 'active-image': index === currentIndex, 'inactive-image': index !== currentIndex },

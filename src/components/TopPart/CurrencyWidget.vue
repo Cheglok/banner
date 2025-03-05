@@ -1,61 +1,130 @@
 <template>
-    <div v-if="data" class="currency">
+    <div v-if="data" class="currency" :class="{ 'full-height': isFullHeight }" @click="isFullHeight = !isFullHeight">
         <h2 class="currency-heading">Курсы валют</h2>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th></th>
-                    <th></th>
-                    <th>покупка</th>
-                    <th>продажа</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="(currency, currencyName) in currencyRates" :key="currencyName">
-                    <td>
-                        <div class="cell_currency">
-                            <component :is="`${currencyName}Icon`" class="currency-icon" />
-                        </div>
-                    </td>
-                    <td class="cell_flag">
-                        <component :is="`${currencyName}Flag`" />
-                    </td>
-                    <td class="cell_price">
-                        <div class="price">{{ currency.buy }}</div>
-                    </td>
-                    <td class="cell_price">
-                        <div class="price">{{ currency.sell }}</div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="table-wrapper">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th>Покупка</th>
+                        <th>Продажа</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(currency, currencyName) in currencyRates" :key="currencyName">
+                        <td>
+                            <div class="cell_currency">
+                                <img
+                                    :src="`/images/currency-icons/${currencyName}.svg`"
+                                    class="currency-icon"
+                                    alt="`${currencyName}-icon`"
+                                />
+                            </div>
+                        </td>
+                        <td class="cell_flag">
+                            <img
+                                :src="`/images/currency-icons/flags/${currencyName}.svg`"
+                                class="flag-icon"
+                                alt="`${currencyName}-flag`"
+                            />
+                        </td>
+                        <td class="cell_price">
+                            {{ currency.buy }}
+                        </td>
+                        <td class="cell_price">{{ currency.sell }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { CurrencyWidgetData } from '@/api/types.ts';
+
 const props = defineProps<{
     data: CurrencyWidgetData;
 }>();
+
+const isFullHeight = ref(false);
 
 const currencyRates = computed(() => props.data.currency_rates);
 </script>
 
 <style scoped lang="scss">
 .currency {
-    padding: 2em;
-    background: linear-gradient(90deg, #5ab2f7 0%, #12cff3 100%);
+    padding: 0 2em;
+    background: linear-gradient(90deg, #22547b 0%, #0593ae 100%);
     color: #fff;
     border-radius: 2.2em;
     height: 100%;
     width: 100%;
     position: absolute;
+    z-index: 1;
+    transition: var(--widget-transition);
+
+    &.full-height {
+        height: 100vh;
+        position: absolute;
+        z-index: 2;
+
+        & .currency-heading {
+            margin-top: 4rem;
+        }
+
+        & .table-wrapper {
+            position: absolute;
+            top: 50%;
+            transform: translate(0, -50%);
+        }
+
+        & th {
+            font-size: 2rem;
+            width: 16%;
+
+            &:nth-child(3) {
+                width: 37%;
+                padding-left: 3.2rem;
+            }
+
+            &:nth-child(4) {
+                width: 37%;
+                padding-left: 3.2rem;
+            }
+        }
+
+        & .cell_price {
+            padding-left: 3.2rem;
+        }
+
+        & .cell_currency,
+        .flag-icon {
+            width: 4.4rem;
+            height: 4.4rem;
+        }
+
+        & .currency-icon {
+            width: 2.4rem;
+            height: 2.4rem;
+            transition: var(--widget-transition);
+        }
+    }
 }
+
+.table-wrapper {
+    position: absolute;
+    width: calc(100vw - 4rem);
+    transition: var(--widget-transition);
+    top: 18%;
+}
+
 .currency-heading {
     font-size: 2.4em;
     font-weight: 700;
-    margin: 0 0 1.4rem;
+    margin: 2rem 0 1.4rem;
+    transition: var(--widget-transition);
 }
 
 .table {
@@ -66,32 +135,37 @@ const currencyRates = computed(() => props.data.currency_rates);
     th {
         font-size: 1.6em;
         padding: 0 0 0.8rem 0;
-
-        &:first-child {
-            width: 15%;
-        }
+        width: 11%;
+        text-align: left;
+        transition: var(--widget-transition);
 
         &:nth-child(3) {
-            width: 35.5%;
-            padding-left: 1.8rem;
+            width: 40%;
+            padding-left: 5.5rem;
         }
 
         &:nth-child(4) {
-            width: 35.5%;
-            padding-left: 1.8rem;
+            width: 40%;
+            padding-left: 5.5rem;
         }
     }
 
     td {
         text-align: center;
         padding: 0;
+        transition: var(--widget-transition);
+
         &.cell_price {
-            padding-left: 1.8rem;
+            padding-left: 5.5rem;
+            font-size: 2.4rem;
+            line-height: 2.4rem;
+            font-weight: 700;
+            color: white;
+            text-align: left;
         }
     }
 
     tbody {
-        color: black;
         tr:not(:last-child) {
             td {
                 padding-bottom: 1rem;
@@ -102,26 +176,28 @@ const currencyRates = computed(() => props.data.currency_rates);
 
 .cell_currency {
     background: white;
-    width: 4.4em;
-    height: 4.4em;
+    width: 3.2em;
+    height: 3.2em;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: var(--widget-transition);
 }
 
 .cell_flag {
     line-height: 0;
 }
 
-.price {
-    font-size: 3em;
-    line-height: 2.4rem;
-    font-weight: 700;
-    background-color: white;
-    width: min-content;
-    min-width: 10.6rem;
-    padding: 1rem;
-    border-radius: 2.2rem;
+.currency-icon {
+    width: 1.745rem;
+    height: 1.745rem;
+    transition: var(--widget-transition);
+}
+
+.flag-icon {
+    width: 3.2em;
+    height: 3.2em;
+    transition: var(--widget-transition);
 }
 </style>

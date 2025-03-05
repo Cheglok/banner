@@ -23,4 +23,5 @@ body {
 :root {
     font-size: calc(2.60417 * 1vw);
     font-family: Gilroy, sans-serif;
+    --widget-transition: all 0.3s ease-in-out;
 }

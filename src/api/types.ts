@@ -13,7 +13,8 @@ export interface TopPart {
 }
 
 export interface BottomPart {
-    banners: string[]; //названия соответствуют названиям картинок (astana-motors-banner.png)
+    banners: string[]; //названия соответствуют названиям картинок, например astana-motors-banner.png
+    // картинки складывать в /images/banners
     animationDuration: number;
 }
 
@@ -22,25 +23,30 @@ export interface WeatherWidgetData {
     date: string; // Среда, 15 января
     temperature: number;
     description: string; // Облачно
-    days: WeatherDay[];
+    slogan: string; // Облачно, возможны осадки<br>Хорошего дня!
+    backgroundIcon: string; // иконка погоды, которая лежит по пути /images/weather-icons/{icon}.svg
+    hours: WeatherDay[];
 }
 
 export interface WeatherDay {
-    day: string;
+    hour: string;
     temp: number;
-    weather: string; // словарь, по которому определяется иконка погоды, в виде {weather}.svg
+    icon: string; // иконка погоды, которая лежит по пути /images/weather-icons/{icon}.svg
 }
 
 export interface TrafficsWidgetData {
-    level: number;
+    level: number; // от 1 до 10
     description: string;
+    slogan: string;
 }
 
 export interface CurrencyWidgetData {
     currency_rates: {
-        usd: Currency; // ключи - словарь, по которому определяются иконки символов валюты и флагов
-        rub: Currency;
-        eur: Currency;
+        usd: Currency; // ключи - словарь, по которому определяются иконки символов валюты и флагов:
+        rub: Currency; // /images/currency-icons/flags/rub.svg
+        eur: Currency; // /images/currency-icons/eur.svg
+        cny: Currency;
+        gbp: Currency;
     };
 }
 
