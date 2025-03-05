@@ -1,5 +1,5 @@
 <template>
-    <div v-if="data" class="weather">
+    <div v-if="data" class="weather" :class="{ 'full-height': isFullHeight }" @click="isFullHeight = !isFullHeight">
         <h2 class="weather__heading">{{ weatherData.title }}</h2>
         <div class="weather__content">
             <span class="weather__date">{{ weatherData.date }}</span>
@@ -20,12 +20,14 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { WeatherWidgetData } from '@/api/types.ts';
 
 const props = defineProps<{
     data: WeatherWidgetData;
 }>();
+
+const isFullHeight = ref(false); //TODO убрать
 
 const weatherData = computed(() => props.data);
 

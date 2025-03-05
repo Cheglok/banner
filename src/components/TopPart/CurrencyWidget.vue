@@ -1,5 +1,5 @@
 <template>
-    <div v-if="data" class="currency">
+    <div v-if="data" class="currency" :class="{ 'full-height': isFullHeight }" @click="isFullHeight = !isFullHeight">
         <h2 class="currency-heading">Курсы валют</h2>
         <div class="table-wrapper">
             <table class="table">
@@ -41,12 +41,14 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { CurrencyWidgetData } from '@/api/types.ts';
 
 const props = defineProps<{
     data: CurrencyWidgetData;
 }>();
+
+const isFullHeight = ref(false);
 
 const currencyRates = computed(() => props.data.currency_rates);
 </script>
