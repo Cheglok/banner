@@ -72,10 +72,10 @@ export const mockData: TerminalData = {
                 },
             },
         },
-        animationDuration: 3000,
+        animationDuration: 7000,
     },
     bottomPart: {
         banners: ['my-car-banner.png', 'astana-motors-banner.png', 'nutcracker-banner.png'],
-        animationDuration: 10000,
+        animationDuration: 5000,
     },
 };
