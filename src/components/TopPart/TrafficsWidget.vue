@@ -10,7 +10,7 @@
         </div>
         <footer>
             <h2 class="traffics__heading">{{ trafficsData.description }}</h2>
-            <p class="traffics__slogan">{{ trafficsData.slogan }}</p>
+            <p class="traffics__slogan" v-html="trafficsData.slogan"></p>
         </footer>
     </div>
 </template>

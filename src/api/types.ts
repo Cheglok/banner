@@ -15,29 +15,29 @@ export interface TopPart {
 export interface BottomPart {
     banners: string[]; //названия соответствуют названиям картинок, например astana-motors-banner.png
     // картинки складывать в /images/banners
-    animationDuration: number;
+    animationDuration: number; // время между сменами баннеров
 }
 
 export interface WeatherWidgetData {
     title: string; // Погода в Астане / Погода завтра
     date: string; // Среда, 15 января
-    temperature: number;
+    temperature: number; // температура
     description: string; // Облачно
-    slogan: string; // Облачно, возможны осадки<br>Хорошего дня!
+    slogan: string; // надпись в нижней части, может обрабатывать HTML. Пример: Облачно, возможны осадки<br>Хорошего дня!
     backgroundIcon: string; // иконка погоды, которая лежит по пути /images/weather-icons/{icon}.svg
     hours: WeatherDay[];
 }
 
 export interface WeatherDay {
-    hour: string;
-    temp: number;
+    hour: string; // 8:00
+    temp: number; // температура
     icon: string; // иконка погоды, которая лежит по пути /images/weather-icons/{icon}.svg
 }
 
 export interface TrafficsWidgetData {
     level: number; // от 1 до 10
-    description: string;
-    slogan: string;
+    description: string; // Средняя загрузка на дорогах
+    slogan: string; // подпись в нижней части экрана, может обрабатывать HTML
 }
 
 export interface CurrencyWidgetData {
