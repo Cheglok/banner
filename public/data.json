@@ -1,0 +1,84 @@
+{
+    "topPart": {
+        "widgets": {
+            "currency": {
+                "currency_rates": {
+                    "usd": {
+                        "sell": 110.0,
+                        "buy": 507.50
+                    },
+                    "eur": {
+                        "sell": 100.0,
+                        "buy": 531.50
+                    },
+                    "rub": {
+                        "sell": 50.88,
+                        "buy": 5.85
+                    },
+                    "gbp": {
+                        "sell": 50.88,
+                        "buy": 5.85
+                    },
+                    "cny": {
+                        "sell": 100.0,
+                        "buy": 531.5
+                    }
+                }
+            },
+            "weather": {
+                "title": "Погода в Астане",
+                "date": "Среда, 16 января",
+                "temperature": -19,
+                "description": "Облачно",
+                "slogan": "Облачно, возможны осадки<br>Хорошего дня!",
+                "backgroundIcon": "d",
+                "hours": [
+                    {
+                        "hour": "18:00",
+                        "temp": -16,
+                        "icon": "d"
+                    },
+                    {
+                        "hour": "8:00",
+                        "temp": -6,
+                        "icon": "d"
+                    },
+                    {
+                        "hour": "8:00",
+                        "temp": -6,
+                        "icon": "n"
+                    },
+                    {
+                        "hour": "8:00",
+                        "temp": -6,
+                        "icon": "d_c1_r1"
+                    },
+                    {
+                        "hour": "8:00",
+                        "temp": -6,
+                        "icon": "c3_s3"
+                    },
+                    {
+                        "hour": "8:00",
+                        "temp": -6,
+                        "icon": "c3_s3"
+                    }
+                ]
+            },
+            "traffics": {
+                "level": 9,
+                "description": "Низкая загрузка на дорогах",
+                "slogan": "Желаем быстрее добраться до пункта назначения!"
+            }
+        },
+        "animationDuration": 700000
+    },
+    "bottomPart": {
+        "banners": [
+            "my-car-banner.png",
+            "astana-motors-banner.png",
+            "nutcracker-banner.png"
+        ],
+        "animationDuration": 5000
+    }
+}

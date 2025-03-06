@@ -26,7 +26,7 @@ const props = defineProps<{
 
 const isFullHeight = ref(false);
 
-const trafficsData = props.data;
+const trafficsData = computed(() => props.data);
 
 const trafficsLights = [
     '#4CBB17',
@@ -41,8 +41,8 @@ const trafficsLights = [
     '#A50021',
 ];
 
-const pluralTraffics = computed(() => pluralizeRussian(trafficsData.level, 'баллов', 'балл', 'балла', 'баллов'));
-const currentColor = computed(() => trafficsLights[trafficsData.level]);
+const pluralTraffics = computed(() => pluralizeRussian(trafficsData.value.level, 'баллов', 'балл', 'балла', 'баллов'));
+const currentColor = computed(() => trafficsLights[trafficsData.value.level]);
 </script>
 
 <style scoped lang="scss">

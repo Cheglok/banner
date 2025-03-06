@@ -13,8 +13,18 @@
 import TopPart from '@/components/TopPart/TopPart.vue';
 import BottomPart from '@/components/BottomPart/BottomPart.vue';
 import { mockData } from '@/api/mockData.ts';
+// import { ref } from 'vue';
 
 const bannerData = mockData; // TODO: получать данные из АПИ
+
+// const bannerData = ref(null);
+// function loadData() {
+//     fetch('/data.json')
+//         .then(o => o.json())
+//         .then(o => bannerData.value = o);
+// }
+// loadData();
+// setInterval(loadData, 3000);
 </script>
 
 <style scoped>
