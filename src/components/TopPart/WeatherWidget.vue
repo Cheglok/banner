@@ -27,7 +27,7 @@ const props = defineProps<{
     data: WeatherWidgetData;
 }>();
 
-const isFullHeight = ref(false); //TODO убрать
+const isFullHeight = ref(false); //TODO в проде это бесполезно(но и безвредно), нужно для демонстрации ресайза виджетов
 
 const weatherData = computed(() => props.data);
 
