@@ -1,21 +1,21 @@
 <template>
     <div v-if="data" class="weather" :class="{ 'full-height': isFullHeight }" @click="isFullHeight = !isFullHeight">
-        <h2 class="weather__heading">{{ weatherData.title }}</h2>
+        <h2 class="weather__heading">{{ data.title }}</h2>
         <div class="weather__content">
-            <span class="weather__date">{{ weatherData.date }}</span>
+            <span class="weather__date">{{ data.date }}</span>
             <div class="weather__conditions">
-                <span class="weather__temperature">{{ weatherData.temperature }}º</span>
-                <span class="weather__description">{{ weatherData.description }}</span>
+                <span class="weather__temperature">{{ data.temperature }}º</span>
+                <span class="weather__description">{{ data.description }}</span>
             </div>
         </div>
         <ul class="weather__hours">
-            <li v-for="hour in weatherData.hours" class="weather__hour" :key="hour.hour">
+            <li v-for="hour in data.hours" class="weather__hour" :key="hour.hour">
                 <div class="weather__hour-name">{{ hour.hour }}</div>
                 <img :src="`/images/weather-icons/${hour.icon}.svg`" :alt="hour.icon" class="weather__icon" />
                 {{ hour.temp }}°
             </li>
         </ul>
-        <p class="weather__slogan" v-html="weatherData.slogan"></p>
+        <p class="weather__slogan" v-html="data.slogan"></p>
     </div>
 </template>
 
@@ -29,9 +29,7 @@ const props = defineProps<{
 
 const isFullHeight = ref(false); //TODO в проде это бесполезно(но и безвредно), нужно для демонстрации ресайза виджетов
 
-const weatherData = computed(() => props.data);
-
-const backgroundImageUrl = computed(() => `url('/images/weather-icons/${weatherData.value.backgroundIcon}.svg')`);
+const backgroundImageUrl = computed(() => `url('/images/weather-icons/${props.data.backgroundIcon}.svg')`);
 </script>
 
 <style scoped lang="scss">

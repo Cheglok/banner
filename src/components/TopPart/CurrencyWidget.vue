@@ -12,7 +12,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(currency, currencyName) in currencyRates" :key="currencyName">
+                    <tr v-for="(currency, currencyName) in data.currency_rates" :key="currencyName">
                         <td>
                             <div class="cell_currency">
                                 <img
@@ -41,16 +41,14 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
 import { CurrencyWidgetData } from '@/api/types.ts';
 
-const props = defineProps<{
+defineProps<{
     data: CurrencyWidgetData;
 }>();
 
 const isFullHeight = ref(false);
-
-const currencyRates = computed(() => props.data.currency_rates);
 </script>
 
 <style scoped lang="scss">

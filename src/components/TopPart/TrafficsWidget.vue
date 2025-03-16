@@ -4,13 +4,13 @@
         <div class="traffics__content">
             Пробки
             <span class="traffic__current">
-                {{ trafficsData.level }}
+                {{ data.level }}
             </span>
             {{ pluralTraffics }}
         </div>
         <footer>
-            <h2 class="traffics__heading">{{ trafficsData.description }}</h2>
-            <p class="traffics__slogan" v-html="trafficsData.slogan"></p>
+            <h2 class="traffics__heading">{{ data.description }}</h2>
+            <p class="traffics__slogan" v-html="data.slogan"></p>
         </footer>
     </div>
 </template>
@@ -26,8 +26,6 @@ const props = defineProps<{
 
 const isFullHeight = ref(false);
 
-const trafficsData = computed(() => props.data);
-
 const trafficsLights = [
     '#4CBB17',
     '#4CBB17',
@@ -41,8 +39,8 @@ const trafficsLights = [
     '#A50021',
 ];
 
-const pluralTraffics = computed(() => pluralizeRussian(trafficsData.value.level, 'баллов', 'балл', 'балла', 'баллов'));
-const currentColor = computed(() => trafficsLights[trafficsData.value.level]);
+const pluralTraffics = computed(() => pluralizeRussian(props.data.level, 'баллов', 'балл', 'балла', 'баллов'));
+const currentColor = computed(() => trafficsLights[props.data.level]);
 </script>
 
 <style scoped lang="scss">
