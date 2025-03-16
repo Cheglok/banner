@@ -1,16 +1,10 @@
 <template>
-    <Transition>
-        <WeatherWidget v-show="currentComponent === 'weather'" :data="topData.widgets.weather" />
-    </Transition>
-    <Transition>
-        <CurrencyWidget v-show="currentComponent === 'currency'" :data="topData.widgets.currency" />
-    </Transition>
-    <Transition>
-        <TrafficsWidget v-show="currentComponent === 'traffics'" :data="topData.widgets.traffics" />
-    </Transition>
-    <Transition>
-        <QueueWidget v-show="currentComponent === 'queue'" :data="topData.widgets.queue" />
-    </Transition>
+    <TransitionGroup>
+        <WeatherWidget v-show="currentComponent === 'weather'" :data="topData.widgets.weather" key="weather" />
+        <CurrencyWidget v-show="currentComponent === 'currency'" :data="topData.widgets.currency" key="currency" />
+        <TrafficsWidget v-show="currentComponent === 'traffics'" :data="topData.widgets.traffics" key="traffics" />
+        <QueueWidget v-show="currentComponent === 'queue'" :data="topData.widgets.queue" key="queue" />
+    </TransitionGroup>
 </template>
 
 <script setup lang="ts">

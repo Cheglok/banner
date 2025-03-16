@@ -142,7 +142,7 @@
                 "slogan": "Желаем быстрее добраться до пункта назначения!"
             }
         },
-        "animationDuration": 700000
+        "animationDuration": 3000
     },
     "bottomPart": {
         "banners": [

@@ -15,7 +15,6 @@
                 v-for="item in items"
                 :class="['group__item', { 'group__item--active': item.active }]"
                 :key="item.number"
-                @click="item.active = !item.active"
             >
                 <div class="left-part">
                     <span class="number">{{ item.number }}</span>
