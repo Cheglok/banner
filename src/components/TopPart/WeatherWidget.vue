@@ -97,7 +97,7 @@ const backgroundImageUrl = computed(() => `url('/images/weather-icons/${weatherD
 }
 
 .weather__content {
-    padding-top: 18px;
+    padding-top: 1.8rem;
     display: grid;
     gap: 0.8rem;
     font-size: 1.4rem;

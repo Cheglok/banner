@@ -1,5 +1,5 @@
 <template>
-    <div class="frame">
+    <div v-if="bannerData" class="frame">
         <div class="frame__top">
             <TopPart :top-data="bannerData.topPart" />
         </div>
@@ -12,19 +12,17 @@
 <script setup lang="ts">
 import TopPart from '@/components/TopPart/TopPart.vue';
 import BottomPart from '@/components/BottomPart/BottomPart.vue';
-import { mockData } from '@/api/mockData.ts';
-// import { ref } from 'vue';
+import { Ref, ref } from 'vue';
+import { TerminalData } from '@/api/types.ts';
 
-const bannerData = mockData; // TODO: получать данные из АПИ
-
-// const bannerData = ref(null);
-// function loadData() {
-//     fetch('/data.json')
-//         .then(o => o.json())
-//         .then(o => bannerData.value = o);
-// }
-// loadData();
-// setInterval(loadData, 3000);
+const bannerData: Ref<null | TerminalData> = ref(null);
+function loadData() {
+    fetch('/data.json')
+        .then((o) => o.json())
+        .then((o) => (bannerData.value = o));
+}
+loadData();
+setInterval(loadData, 1000);
 </script>
 
 <style scoped>

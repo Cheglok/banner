@@ -8,6 +8,9 @@
     <Transition>
         <TrafficsWidget v-show="currentComponent === 'traffics'" :data="topData.widgets.traffics" />
     </Transition>
+    <Transition>
+        <QueueWidget v-show="currentComponent === 'queue'" :data="topData.widgets.queue" />
+    </Transition>
 </template>
 
 <script setup lang="ts">
@@ -17,6 +20,7 @@ import { computed, onMounted, ref } from 'vue';
 import WeatherWidget from '@/components/TopPart/WeatherWidget.vue';
 
 import { TopPart } from '@/api/types.ts';
+import QueueWidget from '@/components/TopPart/QueueWidget/QueueWidget.vue';
 
 const props = defineProps<{
     topData: TopPart;

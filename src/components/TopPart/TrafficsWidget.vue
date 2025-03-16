@@ -97,7 +97,7 @@ const currentColor = computed(() => trafficsLights[trafficsData.value.level]);
 .traffics__content {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 0.4rem;
     text-align: center;
     font-weight: bold;
     transition: var(--widget-transition);

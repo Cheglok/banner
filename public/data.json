@@ -1,6 +1,77 @@
 {
     "topPart": {
         "widgets": {
+            "queue": {
+                "queue": [
+                    {
+                        "number": "11",
+                        "window": "36",
+                        "active": true
+                    },
+                    {
+                        "number": "12",
+                        "window": "28"
+                    },
+                    {
+                        "number": "13",
+                        "window": "1222"
+                    },
+                    {
+                        "number": "14",
+                        "window": "38"
+                    },
+                    {
+                        "number": "15",
+                        "window": "12",
+                        "active": true
+                    },
+                    {
+                        "number": "16",
+                        "window": "36"
+                    },
+                    {
+                        "number": "17",
+                        "window": "28"
+                    },
+                    {
+                        "number": "18",
+                        "window": "1222",
+                        "active": true
+                    },
+                    {
+                        "number": "19",
+                        "window": "38"
+                    },
+                    {
+                        "number": "20",
+                        "window": "12"
+                    },
+                    {
+                        "number": "21",
+                        "window": "36"
+                    },
+                    {
+                        "number": "22",
+                        "window": "28"
+                    },
+                    {
+                        "number": "23",
+                        "window": "1222"
+                    },
+                    {
+                        "number": "24",
+                        "window": "38"
+                    },
+                    {
+                        "number": "25",
+                        "window": "12"
+                    },
+                    {
+                        "number": "26",
+                        "window": "36"
+                    }
+                ]
+            },
             "currency": {
                 "currency_rates": {
                     "usd": {

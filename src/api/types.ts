@@ -8,6 +8,7 @@ export interface TopPart {
         weather: WeatherWidgetData; // ключи - словарь, по которому определяется компонент. Отобразятся только те компоненты, которые переданы
         traffics: TrafficsWidgetData;
         currency: CurrencyWidgetData;
+        queue: QueueWidgetData;
     };
     animationDuration: number; // время между сменами виджетов
 }
@@ -53,4 +54,13 @@ export interface CurrencyWidgetData {
 export interface Currency {
     sell: number;
     buy: number;
+}
+
+export interface QueueWidgetData {
+    queue: QueueItem[];
+}
+export interface QueueItem {
+    number: string;
+    window: string;
+    active: boolean;
 }
