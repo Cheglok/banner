@@ -1,5 +1,5 @@
 <template>
-    <div v-if="data" class="weather" :class="{ 'full-height': isFullHeight }" @click="isFullHeight = !isFullHeight">
+    <div v-if="data" class="weather" :class="{ 'full-height': fullHeight }">
         <h2 class="weather__heading">{{ data.title }}</h2>
         <div class="weather__content">
             <span class="weather__date">{{ data.date }}</span>
@@ -20,14 +20,13 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 import { WeatherWidgetData } from '@/api/types.ts';
 
 const props = defineProps<{
     data: WeatherWidgetData;
+    fullHeight: boolean;
 }>();
-
-const isFullHeight = ref(false); //TODO в проде это бесполезно(но и безвредно), нужно для демонстрации ресайза виджетов
 
 const backgroundImageUrl = computed(() => `url('/images/weather-icons/${props.data.backgroundIcon}.svg')`);
 </script>

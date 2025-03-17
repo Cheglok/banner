@@ -78,7 +78,7 @@ defineProps<{
         }
 
         .left-part {
-            width: 9.4rem;
+            width: 62%;
         }
     }
 
@@ -155,7 +155,7 @@ defineProps<{
 }
 
 .left-part {
-    width: 19rem;
+    width: 55%;
     display: flex;
     align-items: center;
     justify-content: space-between;

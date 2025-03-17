@@ -21,7 +21,18 @@ body {
 }
 
 :root {
-    font-size: calc(2.60417 * 1vw);
     font-family: Gilroy, sans-serif;
     --widget-transition: all 0.3s ease-in-out;
+}
+
+@media (orientation: landscape) {
+    :root {
+        font-size: calc(0.945 * 1vw);
+    }
+}
+
+@media (orientation: portrait) {
+    :root {
+        font-size: calc(2.60417 * 1vw);
+    }
 }

@@ -1,5 +1,5 @@
 {
-    "topPart": {
+    "widgetsPart": {
         "widgets": {
             "queue": {
                 "queue": [
@@ -144,11 +144,12 @@
         },
         "animationDuration": 3000
     },
-    "bottomPart": {
+    "bannersPart": {
         "banners": [
-            "my-car-banner.png",
-            "astana-motors-banner.png",
-            "nutcracker-banner.png"
+            "/images/banners/my-car-banner.png",
+            "/images/banners/astana-motors-banner.png",
+            "/images/banners/nutcracker-banner.png",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTF9W9vwDNn5X7zAVeDHXgUKo0nBy0pqCaDcw&s"
         ],
         "animationDuration": 5000
     }

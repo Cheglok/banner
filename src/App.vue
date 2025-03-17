@@ -1,25 +1,25 @@
 <template>
-    <div v-if="bannerData" class="frame">
+    <div v-if="terminalData" class="frame">
         <div class="frame__top">
-            <TopPart :top-data="bannerData.topPart" />
+            <WidgetsPart :widgets-data="terminalData.widgetsPart" />
         </div>
         <div class="frame__bottom">
-            <BottomPart :bottom-data="bannerData.bottomPart" />
+            <BannersPart :banners-data="terminalData.bannersPart" />
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import TopPart from '@/components/TopPart/TopPart.vue';
-import BottomPart from '@/components/BottomPart/BottomPart.vue';
+import WidgetsPart from '@/components/WidgetsPart/WidgetsPart.vue';
+import BannersPart from '@/components/BannersPart/BannersPart.vue';
 import { Ref, ref } from 'vue';
 import { TerminalData } from '@/api/types.ts';
 
-const bannerData: Ref<null | TerminalData> = ref(null);
+const terminalData: Ref<null | TerminalData> = ref(null);
 function loadData() {
     fetch('/data.json')
         .then((o) => o.json())
-        .then((o) => (bannerData.value = o));
+        .then((o) => (terminalData.value = o));
 }
 loadData();
 setInterval(loadData, 1000);
@@ -27,21 +27,23 @@ setInterval(loadData, 1000);
 
 <style scoped>
 .frame {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-rows: 4fr 6fr;
     width: 100vw;
     height: 100vh;
     background: black;
     overflow: hidden;
+    @media (orientation: landscape) {
+        grid-template-rows: none;
+        grid-template-columns: 50vh auto;
+    }
 }
 
 .frame__top {
-    height: 40vh;
     position: relative;
 }
 
 .frame__bottom {
-    height: 60vh;
     position: relative;
 }
 </style>

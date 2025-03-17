@@ -1,6 +1,6 @@
 <template>
-    <div class="queue" :class="{ 'full-height': isFullHeight }" @click="isFullHeight = !isFullHeight">
-        <template v-if="!isFullHeight">
+    <div class="queue" :class="{ 'full-height': fullHeight }">
+        <template v-if="!fullHeight">
             <div class="container">
                 <QueueGroup :items="smallQueue" small :timeString="timeString" :dateString="dateString" />
             </div>
@@ -22,13 +22,13 @@
 <script setup lang="ts">
 import { QueueWidgetData } from '@/api/types.ts';
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
-import QueueGroup from '@/components/TopPart/QueueWidget/QueueGroup.vue';
+import QueueGroup from '@/components/WidgetsPart/QueueWidget/QueueGroup.vue';
 
 const props = defineProps<{
     data: QueueWidgetData;
+    fullHeight: boolean;
 }>();
 
-const isFullHeight = ref(false);
 let timer = 0;
 const timeString = ref('');
 const dateString = ref('');
@@ -80,7 +80,6 @@ onBeforeUnmount(() => {
 });
 </script>
 
-const isFullHeight = ref(false);
 <style scoped lang="scss">
 .queue {
     background: linear-gradient(90deg, #22547b 0%, #0593ae 100%);

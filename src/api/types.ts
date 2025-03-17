@@ -1,9 +1,9 @@
 export interface TerminalData {
-    topPart: TopPart; // виджеты
-    bottomPart: BottomPart; // баннеры
+    widgetsPart: WidgetsData; // виджеты
+    bannersPart: BannersData; // баннеры
 }
 
-export interface TopPart {
+export interface WidgetsData {
     widgets: {
         weather: WeatherWidgetData; // ключи - словарь, по которому определяется компонент. Отобразятся только те компоненты, которые переданы
         traffics: TrafficsWidgetData;
@@ -13,9 +13,8 @@ export interface TopPart {
     animationDuration: number; // время между сменами виджетов
 }
 
-export interface BottomPart {
-    banners: string[]; //названия соответствуют названиям картинок, например astana-motors-banner.png
-    // картинки складывать в /images/banners
+export interface BannersData {
+    banners: string[]; //путь к картинке, например /images/banners/astana-motors-banner.png. Можно абсолютный в сети
     animationDuration: number; // время между сменами баннеров
 }
 

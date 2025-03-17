@@ -1,5 +1,5 @@
 <template>
-    <div v-if="data" class="currency" :class="{ 'full-height': isFullHeight }" @click="isFullHeight = !isFullHeight">
+    <div v-if="data" class="currency" :class="{ 'full-height': fullHeight }">
         <h2 class="currency-heading">Курсы валют</h2>
         <div class="table-wrapper">
             <table class="table">
@@ -41,14 +41,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
 import { CurrencyWidgetData } from '@/api/types.ts';
 
 defineProps<{
     data: CurrencyWidgetData;
+    fullHeight: boolean;
 }>();
-
-const isFullHeight = ref(false);
 </script>
 
 <style scoped lang="scss">
@@ -113,7 +111,7 @@ const isFullHeight = ref(false);
 
 .table-wrapper {
     position: absolute;
-    width: calc(100vw - 4rem);
+    width: calc(100% - 4rem);
     transition: var(--widget-transition);
     top: 18%;
 }
