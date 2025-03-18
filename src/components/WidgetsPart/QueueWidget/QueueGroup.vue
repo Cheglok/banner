@@ -18,7 +18,7 @@
             >
                 <div class="left-part">
                     <span class="number">{{ item.number }}</span>
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
                             fill-rule="evenodd"
                             clip-rule="evenodd"
@@ -210,5 +210,10 @@ defineProps<{
 
 .time {
     font-size: 2.4rem;
+}
+
+.arrow-icon {
+    width: 2.4rem;
+    height: 2.4rem;
 }
 </style>

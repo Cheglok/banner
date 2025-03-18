@@ -24,6 +24,12 @@
             key="queue"
             :full-height="isLandscapeScreen"
         />
+        <LocationWidget
+            v-if="currentComponent === 'location'"
+            :data="widgetsData.widgets.location"
+            key="location"
+            :full-height="isLandscapeScreen"
+        />
     </TransitionGroup>
 </template>
 
@@ -35,19 +41,18 @@ import WeatherWidget from '@/components/WidgetsPart/WeatherWidget.vue';
 
 import { WidgetsData } from '@/api/types.ts';
 import QueueWidget from '@/components/WidgetsPart/QueueWidget/QueueWidget.vue';
+import LocationWidget from '@/components/WidgetsPart/LocationWidget.vue';
 
 const props = defineProps<{
     widgetsData: WidgetsData;
+    isLandscapeScreen: boolean;
 }>();
-
-const isLandscapeScreen = ref(false);
 
 const currentComponent = computed(() => Object.keys(props.widgetsData.widgets)[currentIndex.value]);
 
 const currentIndex = ref(0);
 
 onMounted(() => {
-    isLandscapeScreen.value = window.innerWidth > window.innerHeight;
     setInterval(() => {
         currentIndex.value = (currentIndex.value + 1) % Object.keys(props.widgetsData.widgets).length;
     }, props.widgetsData.animationDuration);

@@ -1,6 +1,36 @@
 {
     "widgetsPart": {
         "widgets": {
+            "location": {
+                "location": "Проспект Мангилик Ел, 30",
+                "routes": [
+                    {
+                        "name": "Монумент-Бәйтерек",
+                        "carTime": 20,
+                        "pedestrianTime": 36
+                    },
+                    {
+                        "name": "Хан Шатыр",
+                        "carTime": 31,
+                        "pedestrianTime": 55
+                    },
+                    {
+                        "name": "Ailand",
+                        "carTime": 44,
+                        "pedestrianTime": 91
+                    },
+                    {
+                        "name": "Orken de luxe, жилой комплекс",
+                        "carTime": 155,
+                        "pedestrianTime": 131
+                    },
+                    {
+                        "name": "Orken de luxe, жилой комплекс",
+                        "carTime": 55,
+                        "pedestrianTime": 131
+                    }
+                ]
+            },
             "queue": {
                 "queue": [
                     {
@@ -142,7 +172,7 @@
                 "slogan": "Желаем быстрее добраться до пункта назначения!"
             }
         },
-        "animationDuration": 3000
+        "animationDuration": 10000
     },
     "bannersPart": {
         "banners": [

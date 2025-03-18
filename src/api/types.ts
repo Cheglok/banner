@@ -9,6 +9,7 @@ export interface WidgetsData {
         traffics: TrafficsWidgetData;
         currency: CurrencyWidgetData;
         queue: QueueWidgetData;
+        location: LocationWidgetData;
     };
     animationDuration: number; // время между сменами виджетов
 }
@@ -62,4 +63,15 @@ export interface QueueItem {
     number: string;
     window: string;
     active: boolean;
+}
+
+export interface LocationWidgetData {
+    location: string;
+    routes: Route[];
+}
+
+export interface Route {
+    name: string;
+    carTime: number;
+    pedestrianTime: number;
 }

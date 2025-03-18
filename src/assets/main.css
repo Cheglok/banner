@@ -27,7 +27,7 @@ body {
 
 @media (orientation: landscape) {
     :root {
-        font-size: calc(0.945 * 1vw);
+        font-size: calc(1.3021 * 1vh);
     }
 }
 

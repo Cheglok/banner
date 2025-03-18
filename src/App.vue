@@ -1,7 +1,7 @@
 <template>
-    <div v-if="terminalData" class="frame">
+    <div v-if="terminalData" class="frame" @click="isLandscapeScreen = !isLandscapeScreen">
         <div class="frame__top">
-            <WidgetsPart :widgets-data="terminalData.widgetsPart" />
+            <WidgetsPart :widgets-data="terminalData.widgetsPart" :is-landscape-screen="isLandscapeScreen" />
         </div>
         <div class="frame__bottom">
             <BannersPart :banners-data="terminalData.bannersPart" />
@@ -12,10 +12,11 @@
 <script setup lang="ts">
 import WidgetsPart from '@/components/WidgetsPart/WidgetsPart.vue';
 import BannersPart from '@/components/BannersPart/BannersPart.vue';
-import { Ref, ref } from 'vue';
+import { onMounted, Ref, ref } from 'vue';
 import { TerminalData } from '@/api/types.ts';
 
 const terminalData: Ref<null | TerminalData> = ref(null);
+const isLandscapeScreen = ref(false);
 function loadData() {
     fetch('/data.json')
         .then((o) => o.json())
@@ -23,6 +24,10 @@ function loadData() {
 }
 loadData();
 setInterval(loadData, 1000);
+
+onMounted(() => {
+    isLandscapeScreen.value = window.innerWidth > window.innerHeight;
+});
 </script>
 
 <style scoped>
