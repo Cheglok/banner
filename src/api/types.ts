@@ -15,8 +15,14 @@ export interface WidgetsData {
 }
 
 export interface BannersData {
-    banners: string[]; //путь к картинке, например /images/banners/astana-motors-banner.png. Можно абсолютный в сети
+    banners: Banner[];
     animationDuration: number; // время между сменами баннеров
+}
+
+export interface Banner {
+    type: 'image' | 'video';
+    src: string; //путь к картинке или видео, например /images/banners/astana-motors-banner.png. Можно абсолютный в сети
+    animationDuration?: number; // время показа баннера, в миллисекундах
 }
 
 export interface WeatherWidgetData {

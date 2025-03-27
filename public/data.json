@@ -176,10 +176,29 @@
     },
     "bannersPart": {
         "banners": [
-            "/images/banners/my-car-banner.png",
-            "/images/banners/astana-motors-banner.png",
-            "/images/banners/nutcracker-banner.png",
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTF9W9vwDNn5X7zAVeDHXgUKo0nBy0pqCaDcw&s"
+            {
+                "type": "video",
+                "src": "/video/jellyfish.mp4",
+                "animationDuration": 2000
+            },
+            {
+                "type": "image",
+                "src": "/images/banners/my-car-banner.png"
+            },
+            {
+                "type": "image",
+                "src": "/images/banners/nutcracker-banner.png",
+                "animationDuration": 3000
+            },
+            {
+                "type": "video",
+                "src": "/video/jellyfish.mp4",
+                "animationDuration": 21000
+            },
+            {
+                "type": "image",
+                "src": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTF9W9vwDNn5X7zAVeDHXgUKo0nBy0pqCaDcw&s"
+            }
         ],
         "animationDuration": 5000
     }

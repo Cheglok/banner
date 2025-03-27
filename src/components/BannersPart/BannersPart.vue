@@ -1,18 +1,29 @@
 <template>
-    <template v-for="(banner, index) in bannersData.banners" :key="index">
-        <img
-            :src="banner"
-            :class="[
-                'bottom-banner',
-                { 'active-image': index === currentIndex, 'inactive-image': index !== currentIndex },
-            ]"
-            alt=""
-        />
-    </template>
+    <div class="banner-wrapper">
+        <TransitionGroup name="fade" mode="out-in">
+            <video
+                v-if="currentBanner.type === 'video'"
+                autoplay
+                muted
+                loop
+                :key="'vid' + currentIndex"
+                class="banner-media"
+            >
+                <source :src="currentBanner.src" type="video/mp4" />
+            </video>
+            <img
+                v-if="currentBanner.type === 'image'"
+                :key="currentIndex"
+                :src="currentBanner.src"
+                alt=""
+                class="banner-media"
+            />
+        </TransitionGroup>
+    </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { BannersData } from '@/api/types.ts';
 
 const props = defineProps<{
@@ -21,30 +32,41 @@ const props = defineProps<{
 
 const currentIndex = ref(0);
 
-onMounted(() => {
-    setInterval(() => {
+const currentBanner = computed(() => props.bannersData.banners[currentIndex.value]);
+
+function showNextBanner() {
+    setTimeout(() => {
         currentIndex.value = (currentIndex.value + 1) % props.bannersData.banners.length;
-    }, props.bannersData.animationDuration);
+        showNextBanner();
+    }, props.bannersData.banners[currentIndex.value].animationDuration || props.bannersData.animationDuration);
+}
+
+onMounted(() => {
+    showNextBanner();
 });
 </script>
 
 <style scoped lang="scss">
-.bottom-banner {
+.banner-wrapper {
+    max-height: 60vh;
+    border-radius: 2.2rem;
+    overflow: hidden;
+    position: relative;
+    height: 60vh;
+}
+.banner-media {
     width: 100%;
     height: 100%;
     object-fit: cover;
     position: absolute;
-    opacity: 1;
-    border-radius: 2.2rem;
 }
-
-.active-image {
-    opacity: 1;
+.fade-enter-active,
+.fade-leave-active {
     transition: opacity 0.9s ease;
 }
 
-.inactive-image {
+.fade-enter-from,
+.fade-leave-to {
     opacity: 0;
-    transition: opacity 0.9s ease;
 }
 </style>
