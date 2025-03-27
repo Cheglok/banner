@@ -48,11 +48,10 @@ onMounted(() => {
 
 <style scoped lang="scss">
 .banner-wrapper {
-    max-height: 60vh;
     border-radius: 2.2rem;
     overflow: hidden;
     position: relative;
-    height: 60vh;
+    height: 100%;
 }
 .banner-media {
     width: 100%;
