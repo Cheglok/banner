@@ -12,8 +12,8 @@
         </div>
         <TransitionGroup name="list" tag="ul" class="group__list">
             <li
-                v-for="item in items"
-                :class="['group__item', { 'group__item--active': item.active }]"
+                v-for="(item, index) in items"
+                :class="['group__item', { 'group__item--active': item.active || (!index && !tiny) }]"
                 :key="item.number"
             >
                 <div class="left-part">
@@ -23,7 +23,7 @@
                             fill-rule="evenodd"
                             clip-rule="evenodd"
                             d="M7.36612 19.6339C7.85427 20.122 8.64573 20.122 9.13388 19.6339L16.5178 12.25L9.13389 4.86612C8.64573 4.37796 7.85427 4.37796 7.36612 4.86612C6.87796 5.35427 6.87796 6.14573 7.36612 6.63388L12.9822 12.25L7.36612 17.8661C6.87796 18.3543 6.87796 19.1457 7.36612 19.6339Z"
-                            fill="white"
+                            fill="currentColor"
                         />
                     </svg>
                 </div>
@@ -146,11 +146,15 @@ defineProps<{
     font-size: 3.2rem;
     text-align: center;
     padding: 0.2rem 0.8rem;
-    background: #ffffff33;
+    background: var(--background-inactive-color);
     border-radius: 0.4rem;
 
     &--active {
-        background: #34c759;
+        background: var(--background-active-color);
+        color: var(--active-text-color);
+        & .window-number::after {
+            background: var(--active-text-color);
+        }
     }
 }
 

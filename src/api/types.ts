@@ -64,6 +64,7 @@ export interface Currency {
 
 export interface QueueWidgetData {
     queue: QueueItem[];
+    theme?: 'black' | 'light';
 }
 export interface QueueItem {
     number: string;

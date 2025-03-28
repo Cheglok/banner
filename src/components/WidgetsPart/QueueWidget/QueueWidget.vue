@@ -1,5 +1,5 @@
 <template>
-    <div class="queue" :class="{ 'full-height': fullHeight }">
+    <div class="queue" :class="[{ 'full-height': fullHeight }, data.theme || 'black']">
         <template v-if="!fullHeight">
             <div class="container">
                 <QueueGroup :items="smallQueue" small :timeString="timeString" :dateString="dateString" />
@@ -82,7 +82,13 @@ onBeforeUnmount(() => {
 
 <style scoped lang="scss">
 .queue {
-    background: linear-gradient(90deg, #22547b 0%, #0593ae 100%);
+    :deep {
+        --background-primary-color: black;
+        --background-active-color: transparent;
+        --active-text-color: #ff0000;
+        --background-inactive-color: transparent;
+    }
+    background: var(--background-primary-color);
     color: #fff;
     border-radius: 2.2rem;
     height: 100%;
@@ -92,6 +98,14 @@ onBeforeUnmount(() => {
     transition: var(--widget-transition);
     font-weight: bold;
     overflow: hidden;
+    &.light {
+        :deep {
+            --background-primary-color: linear-gradient(90deg, #22547b 0%, #0593ae 100%);
+            --background-active-color: #34c759;
+            --active-text-color: #ffffff;
+            --background-inactive-color: #ffffff33;
+        }
+    }
 
     &.full-height {
         height: 100vh;
