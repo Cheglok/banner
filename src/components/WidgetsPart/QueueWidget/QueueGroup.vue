@@ -1,5 +1,5 @@
 <template>
-    <div class="group" :class="{ 'group--small': small, 'group--tiny': tiny }">
+    <div class="group" :class="{ 'group--small': small, 'group--tiny': tiny, 'group--TVinCON': TVinCON }">
         <div class="group__headers">
             <div class="group__header">
                 <span class="group__header-text">нөмір номер</span>
@@ -44,6 +44,7 @@ defineProps<{
     items: QueueItem[];
     small?: boolean;
     tiny?: boolean;
+    TVinCON?: boolean;
     timeString?: string;
     dateString?: string;
 }>();
@@ -88,6 +89,48 @@ defineProps<{
             grid-auto-flow: column;
             grid-template-rows: repeat(6, 3.1rem);
             column-gap: 1.4rem;
+        }
+    }
+
+    &--TVinCON {
+        gap: 1.6rem;
+
+        .group__header {
+            height: 10rem;
+            font-size: 3.2rem;
+        }
+
+        .group__header-text {
+            width: 15.3rem;
+            padding: 1.2rem 2.2rem;
+            border-radius: 1.6rem;
+
+            &::after {
+                height: 0.2rem;
+            }
+        }
+
+        .group__list {
+            display: grid;
+            gap: 1.6rem;
+            grid-auto-rows: 10.9rem;
+        }
+
+        .group__item {
+            font-size: 7.2rem;
+            padding: 1rem 2.2rem;
+            border-radius: 1.6rem;
+        }
+
+        .window-number {
+            &::after {
+                height: 0.4rem;
+            }
+        }
+
+        .arrow-icon {
+            width: 6rem;
+            height: 6rem;
         }
     }
 }
@@ -152,6 +195,7 @@ defineProps<{
     &--active {
         background: var(--background-active-color);
         color: var(--active-text-color);
+
         & .window-number::after {
             background: var(--active-text-color);
         }

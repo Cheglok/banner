@@ -1,6 +1,7 @@
 export interface TerminalData {
     widgetsPart: WidgetsData; // виджеты
     bannersPart: BannersData; // баннеры
+    deviceType?: DEVICE_TYPE; // тип устройства
 }
 
 export interface WidgetsData {
@@ -81,4 +82,8 @@ export interface Route {
     name: string;
     carTime: number;
     pedestrianTime: number;
+}
+
+export enum DEVICE_TYPE {
+    TVinCON = 'TVinCON',
 }

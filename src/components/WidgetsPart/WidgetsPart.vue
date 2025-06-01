@@ -21,6 +21,7 @@
         <QueueWidget
             v-if="currentComponent === 'queue'"
             :data="widgetsData.widgets.queue"
+            :device-type="deviceType"
             key="queue"
             :full-height="isLandscapeScreen"
         />
@@ -39,13 +40,14 @@ import TrafficsWidget from '@/components/WidgetsPart/TrafficsWidget.vue';
 import { computed, onMounted, ref } from 'vue';
 import WeatherWidget from '@/components/WidgetsPart/WeatherWidget.vue';
 
-import { WidgetsData } from '@/api/types.ts';
+import { DEVICE_TYPE, WidgetsData } from '@/api/types.ts';
 import QueueWidget from '@/components/WidgetsPart/QueueWidget/QueueWidget.vue';
 import LocationWidget from '@/components/WidgetsPart/LocationWidget.vue';
 
 const props = defineProps<{
     widgetsData: WidgetsData;
     isLandscapeScreen: boolean;
+    deviceType?: DEVICE_TYPE;
 }>();
 
 const currentComponent = computed(() => Object.keys(props.widgetsData.widgets)[currentIndex.value]);

@@ -1,6 +1,7 @@
 <template>
-    <div class="queue" :class="[{ 'full-height': fullHeight }, data.theme || 'black']">
-        <template v-if="!fullHeight">
+    <div class="queue" :class="classes">
+        <QueueGroup v-if="deviceType === DEVICE_TYPE.TVinCON" :items="firstSevenItems" :TVinCON="true" />
+        <template v-else-if="!fullHeight">
             <div class="container">
                 <QueueGroup :items="smallQueue" small :timeString="timeString" :dateString="dateString" />
             </div>
@@ -20,13 +21,14 @@
 </template>
 
 <script setup lang="ts">
-import { QueueWidgetData } from '@/api/types.ts';
+import { DEVICE_TYPE, QueueWidgetData } from '@/api/types.ts';
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 import QueueGroup from '@/components/WidgetsPart/QueueWidget/QueueGroup.vue';
 
 const props = defineProps<{
     data: QueueWidgetData;
     fullHeight: boolean;
+    deviceType?: DEVICE_TYPE;
 }>();
 
 let timer = 0;
@@ -60,6 +62,16 @@ const bottomQueue = computed(() => {
     return sortedQueue.value.slice(7, 19);
 });
 
+const firstSevenItems = computed(() => sortedQueue.value.slice(0, 7));
+
+const classes = computed(() => {
+    return [
+        { 'full-height': props.fullHeight },
+        { queue__TVinCON: props.deviceType === DEVICE_TYPE.TVinCON },
+        props.data.theme || 'black',
+    ];
+});
+
 function updateTime() {
     const date = new Date();
     const hours = date.getHours().toString().padStart(2, '0');
@@ -71,6 +83,7 @@ function updateTime() {
         year: '2-digit',
     });
 }
+
 onMounted(() => {
     updateTime();
     timer = setInterval(updateTime, 1000);
@@ -88,6 +101,7 @@ onBeforeUnmount(() => {
         --active-text-color: #ff0000;
         --background-inactive-color: transparent;
     }
+
     background: var(--background-primary-color);
     color: #fff;
     border-radius: 2.2rem;
@@ -98,6 +112,7 @@ onBeforeUnmount(() => {
     transition: var(--widget-transition);
     font-weight: bold;
     overflow: hidden;
+
     &.light {
         :deep {
             --background-primary-color: linear-gradient(90deg, #22547b 0%, #0593ae 100%);
@@ -112,12 +127,18 @@ onBeforeUnmount(() => {
         position: absolute;
         z-index: 2;
     }
+
+    &__TVinCON {
+        padding: 5.25rem 8.65rem;
+    }
 }
+
 .container {
     padding: 2rem;
     display: grid;
     gap: 3rem;
 }
+
 .top-timer {
     background: #00000033;
     border-radius: 0.4rem;
@@ -128,9 +149,11 @@ onBeforeUnmount(() => {
     align-items: flex-end;
     gap: 0.8rem;
 }
+
 .heading {
     flex-grow: 1;
 }
+
 .date {
     font-size: 1.5rem;
 }

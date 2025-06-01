@@ -1,6 +1,6 @@
 <template>
     <div class="banner-wrapper">
-        <TransitionGroup name="fade" mode="out-in">
+        <TransitionGroup name="fade">
             <video
                 v-if="currentBanner.type === 'video'"
                 autoplay
