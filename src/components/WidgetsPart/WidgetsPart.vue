@@ -55,6 +55,7 @@ const currentComponent = computed(() => Object.keys(props.widgetsData.widgets)[c
 const currentIndex = ref(0);
 
 onMounted(() => {
+    if (!props.widgetsData.animationDuration) return;
     setInterval(() => {
         currentIndex.value = (currentIndex.value + 1) % Object.keys(props.widgetsData.widgets).length;
     }, props.widgetsData.animationDuration);
