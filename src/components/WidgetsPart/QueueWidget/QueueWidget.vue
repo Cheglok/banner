@@ -1,6 +1,6 @@
 <template>
     <div class="queue" :class="classes">
-        <QueueGroup v-if="deviceType === DEVICE_TYPE.TVinCON" :items="firstSevenItems" :TVinCON="true" />
+        <QueueGroup v-if="deviceType" :items="firstSevenItems" :deviceType="deviceType" />
         <template v-else-if="!fullHeight">
             <div class="container">
                 <QueueGroup :items="smallQueue" small :timeString="timeString" :dateString="dateString" />
@@ -67,8 +67,8 @@ const firstSevenItems = computed(() => sortedQueue.value.slice(0, 7));
 const classes = computed(() => {
     return [
         { 'full-height': props.fullHeight },
-        { queue__TVinCON: props.deviceType === DEVICE_TYPE.TVinCON },
         props.data.theme || 'black',
+        props.deviceType ? `queue--${props.deviceType}` : '',
     ];
 });
 
@@ -128,7 +128,8 @@ onBeforeUnmount(() => {
         z-index: 2;
     }
 
-    &__TVinCON {
+    &--TVinCON,
+    &--TV3840x2160 {
         padding: 5.25rem 8.65rem;
     }
 }

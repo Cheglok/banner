@@ -86,4 +86,5 @@ export interface Route {
 
 export enum DEVICE_TYPE {
     TVinCON = 'TVinCON',
+    TV3840x2160 = 'TV3840x2160',
 }

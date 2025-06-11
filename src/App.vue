@@ -1,10 +1,5 @@
 <template>
-    <div
-        v-if="terminalData"
-        class="frame"
-        :class="{ TVinCON: terminalData && terminalData.deviceType === DEVICE_TYPE.TVinCON }"
-        @click="isLandscapeScreen = !isLandscapeScreen"
-    >
+    <div v-if="terminalData" class="frame" :class="classes" @click="isLandscapeScreen = !isLandscapeScreen">
         <div class="frame__top">
             <WidgetsPart
                 :widgets-data="terminalData.widgetsPart"
@@ -13,7 +8,7 @@
             />
         </div>
         <div class="frame__bottom">
-            <BannersPart :banners-data="terminalData.bannersPart" />
+            <BannersPart :banners-data="terminalData.bannersPart" :device-type="terminalData.deviceType" />
         </div>
     </div>
 </template>
@@ -21,11 +16,13 @@
 <script setup lang="ts">
 import WidgetsPart from '@/components/WidgetsPart/WidgetsPart.vue';
 import BannersPart from '@/components/BannersPart/BannersPart.vue';
-import { onMounted, Ref, ref, watch } from 'vue';
+import { computed, onMounted, Ref, ref, watch } from 'vue';
 import { DEVICE_TYPE, TerminalData } from '@/api/types.ts';
 
 const terminalData: Ref<null | TerminalData> = ref(null);
 const isLandscapeScreen = ref(false);
+
+const classes = computed(() => (terminalData.value?.deviceType ? terminalData.value.deviceType : ''));
 
 function loadData() {
     fetch('/data.json')
@@ -43,7 +40,7 @@ onMounted(() => {
 watch(
     () => terminalData.value?.deviceType,
     (newValue) => {
-        if (newValue === DEVICE_TYPE.TVinCON) {
+        if (newValue === DEVICE_TYPE.TVinCON || newValue === DEVICE_TYPE.TV3840x2160) {
             document.documentElement.style.fontSize = 'calc(0.52084 * 1vw)';
         }
     },
@@ -68,6 +65,10 @@ watch(
 .TVinCON {
     grid-template-rows: none;
     grid-template-columns: 4fr 6fr;
+}
+.TV3840x2160 {
+    grid-template-rows: none;
+    grid-template-columns: 560fr 494fr;
 }
 
 .frame__top {

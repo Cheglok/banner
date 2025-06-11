@@ -1,5 +1,5 @@
 <template>
-    <div class="group" :class="{ 'group--small': small, 'group--tiny': tiny, 'group--TVinCON': TVinCON }">
+    <div class="group" :class="classes">
         <div class="group__headers">
             <div class="group__header">
                 <span class="group__header-text">нөмір номер</span>
@@ -38,16 +38,23 @@
 </template>
 
 <script setup lang="ts">
-import { QueueItem } from '@/api/types.ts';
+import { DEVICE_TYPE, QueueItem } from '@/api/types.ts';
+import { computed } from 'vue';
 
-defineProps<{
+const props = defineProps<{
     items: QueueItem[];
     small?: boolean;
     tiny?: boolean;
-    TVinCON?: boolean;
+    deviceType?: DEVICE_TYPE;
     timeString?: string;
     dateString?: string;
 }>();
+
+const classes = computed(() => ({
+    'group--small': props.small,
+    'group--tiny': props.tiny,
+    [`group--${props.deviceType}`]: props.deviceType,
+}));
 </script>
 
 <style scoped lang="scss">
@@ -92,8 +99,14 @@ defineProps<{
         }
     }
 
-    &--TVinCON {
+    &--TV3840x2160 {
+        max-width: 64rem;
+    }
+
+    &--TVinCON,
+    &--TV3840x2160 {
         gap: 1.6rem;
+        margin: 0 auto;
 
         .group__header {
             height: 10rem;

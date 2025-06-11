@@ -28,3 +28,7 @@ coverage
 *.sw?
 
 *.tsbuildinfo
+/public/video/allVideo.mp4
+/public/video/vlad.mp4
+/public/video/vlad2.mp4
+/public/video/vlad3.mp4
