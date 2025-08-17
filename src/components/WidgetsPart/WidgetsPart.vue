@@ -1,75 +1,54 @@
 <template>
-    <TransitionGroup>
-        <WeatherWidget
-            v-if="currentComponent === 'weather'"
-            :data="widgetsData.widgets.weather"
-            key="weather"
-            :full-height="isLandscapeScreen"
-        />
-        <CurrencyWidget
-            v-if="currentComponent === 'currency'"
-            :data="widgetsData.widgets.currency"
-            key="currency"
-            :full-height="isLandscapeScreen"
-        />
-        <TrafficsWidget
-            v-if="currentComponent === 'traffics'"
-            :data="widgetsData.widgets.traffics"
-            key="traffics"
-            :full-height="isLandscapeScreen"
-        />
+    <div class="widgets">
         <QueueWidget
-            v-if="currentComponent === 'queue'"
             :data="widgetsData.widgets.queue"
-            :device-type="deviceType"
             key="queue"
-            :full-height="isLandscapeScreen"
+            :is-landscape-screen="isLandscapeScreen"
+            class="widgets__top"
         />
-        <LocationWidget
-            v-if="currentComponent === 'location'"
-            :data="widgetsData.widgets.location"
-            key="location"
-            :full-height="isLandscapeScreen"
-        />
-    </TransitionGroup>
+        <PopupsZone class="widgets__bottom" :widgets="widgetsData.widgets" :is-landscape-screen="isLandscapeScreen">
+        </PopupsZone>
+    </div>
 </template>
 
 <script setup lang="ts">
-import CurrencyWidget from '@/components/WidgetsPart/CurrencyWidget.vue';
-import TrafficsWidget from '@/components/WidgetsPart/TrafficsWidget.vue';
-import { computed, onMounted, ref } from 'vue';
-import WeatherWidget from '@/components/WidgetsPart/WeatherWidget.vue';
-
-import { DEVICE_TYPE, WidgetsData } from '@/api/types.ts';
+import { WidgetsData } from '@/api/types.ts';
 import QueueWidget from '@/components/WidgetsPart/QueueWidget/QueueWidget.vue';
-import LocationWidget from '@/components/WidgetsPart/LocationWidget.vue';
-
-const props = defineProps<{
+import PopupsZone from '@/components/Popups/PopupsZone.vue';
+defineProps<{
     widgetsData: WidgetsData;
     isLandscapeScreen: boolean;
-    deviceType?: DEVICE_TYPE;
 }>();
-
-const currentComponent = computed(() => Object.keys(props.widgetsData.widgets)[currentIndex.value]);
-
-const currentIndex = ref(0);
-
-onMounted(() => {
-    if (!props.widgetsData.animationDuration) return;
-    setInterval(() => {
-        currentIndex.value = (currentIndex.value + 1) % Object.keys(props.widgetsData.widgets).length;
-    }, props.widgetsData.animationDuration);
-});
 </script>
 
 <style scoped lang="scss">
-.v-enter-active,
-.v-leave-active {
-    transition: opacity 0.5s ease;
+.widgets {
+    position: relative;
+    padding: 3.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 3.2rem;
+    height: 100%;
+    overflow: hidden;
 }
 
-.v-enter-from,
-.v-leave-to {
-    opacity: 0;
+.widgets__top {
+    height: 100%;
 }
+
+.widgets__bottom {
+    height: 18rem;
+    border-radius: 4.4rem;
+    flex-shrink: 0;
+}
+
+//.v-enter-active,
+//.v-leave-active {
+//    transition: opacity 0.5s ease;
+//}
+//
+//.v-enter-from,
+//.v-leave-to {
+//    opacity: 0;
+//}
 </style>

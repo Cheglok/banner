@@ -1,18 +1,18 @@
 export interface TerminalData {
     widgetsPart: WidgetsData; // виджеты
     bannersPart: BannersData; // баннеры
-    deviceType?: DEVICE_TYPE; // тип устройства
 }
 
 export interface WidgetsData {
-    widgets: {
-        weather: WeatherWidgetData; // ключи - словарь, по которому определяется компонент. Отобразятся только те компоненты, которые переданы
-        traffics: TrafficsWidgetData;
-        currency: CurrencyWidgetData;
-        queue: QueueWidgetData;
-        location: LocationWidgetData;
-    };
-    animationDuration: number; // время между сменами виджетов
+    widgets: Widgets;
+}
+
+export interface Widgets {
+    weather: WeatherWidgetData; // ключи - словарь, по которому определяется компонент. Отобразятся только те компоненты, которые переданы
+    traffics: TrafficsWidgetData;
+    currency: CurrencyWidgetData;
+    queue: QueueWidgetData;
+    location: LocationWidgetData;
 }
 
 export interface BannersData {
@@ -31,9 +31,9 @@ export interface WeatherWidgetData {
     date: string; // Среда, 15 января
     temperature: number; // температура
     description: string; // Облачно
-    slogan: string; // надпись в нижней части, может обрабатывать HTML. Пример: Облачно, возможны осадки<br>Хорошего дня!
     backgroundIcon: string; // иконка погоды, которая лежит по пути /images/weather-icons/{icon}.svg
     hours: WeatherDay[];
+    animationDuration?: number;
 }
 
 export interface WeatherDay {
@@ -45,7 +45,7 @@ export interface WeatherDay {
 export interface TrafficsWidgetData {
     level: number; // от 1 до 10
     description: string; // Средняя загрузка на дорогах
-    slogan: string; // подпись в нижней части экрана, может обрабатывать HTML
+    animationDuration?: number;
 }
 
 export interface CurrencyWidgetData {
@@ -56,6 +56,7 @@ export interface CurrencyWidgetData {
         cny: Currency;
         gbp: Currency;
     };
+    animationDuration?: number;
 }
 
 export interface Currency {
@@ -65,7 +66,7 @@ export interface Currency {
 
 export interface QueueWidgetData {
     queue: QueueItem[];
-    theme?: 'black' | 'light';
+    animationDuration?: number;
 }
 export interface QueueItem {
     number: string;
@@ -76,15 +77,11 @@ export interface QueueItem {
 export interface LocationWidgetData {
     location: string;
     routes: Route[];
+    animationDuration?: number;
 }
 
 export interface Route {
     name: string;
     carTime: number;
     pedestrianTime: number;
-}
-
-export enum DEVICE_TYPE {
-    TVinCON = 'TVinCON',
-    TV3840x2160 = 'TV3840x2160',
 }

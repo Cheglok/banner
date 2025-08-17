@@ -5,15 +5,15 @@
                 <span class="group__header-text">нөмір номер</span>
                 <span class="group__header-text">терезе окно</span>
             </div>
-            <div v-if="small" class="group__header">
+            <div class="group__header">
                 <span class="group__header-text">нөмір номер</span>
                 <span class="group__header-text">терезе окно</span>
             </div>
         </div>
         <TransitionGroup name="list" tag="ul" class="group__list">
             <li
-                v-for="(item, index) in items"
-                :class="['group__item', { 'group__item--active': item.active || (!index && !tiny) }]"
+                v-for="item in items"
+                :class="['group__item', { 'group__item--active': item.active }]"
                 :key="item.number"
             >
                 <div class="left-part">
@@ -29,153 +29,63 @@
                 </div>
                 <span class="window-number">{{ item.window }}</span>
             </li>
-            <li class="datetime" v-if="timeString && dateString">
-                <span class="time">{{ timeString }}</span>
-                {{ dateString }}
-            </li>
         </TransitionGroup>
     </div>
 </template>
 
 <script setup lang="ts">
-import { DEVICE_TYPE, QueueItem } from '@/api/types.ts';
+import { QueueItem } from '@/api/types.ts';
 import { computed } from 'vue';
 
 const props = defineProps<{
     items: QueueItem[];
-    small?: boolean;
-    tiny?: boolean;
-    deviceType?: DEVICE_TYPE;
-    timeString?: string;
-    dateString?: string;
+    isLandscapeScreen: boolean;
 }>();
 
 const classes = computed(() => ({
-    'group--small': props.small,
-    'group--tiny': props.tiny,
-    [`group--${props.deviceType}`]: props.deviceType,
+    'group--portrait': !props.isLandscapeScreen,
 }));
+
+const maxRows = computed(() => {
+    return props.isLandscapeScreen ? 5 : 4;
+});
 </script>
 
 <style scoped lang="scss">
 .group {
-    width: 100%;
-    min-height: 1rem;
     display: grid;
-    gap: 0.4rem;
-
-    &--small {
-        .group__header {
-            height: 2.6rem;
-            font-size: 1rem;
-        }
-
-        .group__header-text {
-            width: 5rem;
-        }
-
-        .group__list {
-            grid-template-columns: 1fr 1fr;
-            grid-auto-flow: column;
-            grid-template-rows: repeat(6, 3.6rem);
-            column-gap: 1.4rem;
-        }
-
-        .group__item {
-            font-size: 2rem;
-        }
-
-        .left-part {
-            width: 62%;
-        }
-    }
-
-    &--tiny {
-        .group__list {
-            grid-template-columns: 1fr 1fr;
-            grid-auto-flow: column;
-            grid-template-rows: repeat(6, 3.1rem);
-            column-gap: 1.4rem;
-        }
-    }
-
-    &--TV3840x2160 {
-        max-width: 64rem;
-    }
-
-    &--TVinCON,
-    &--TV3840x2160 {
-        gap: 1.6rem;
-        margin: 0 auto;
-
-        .group__header {
-            height: 10rem;
-            font-size: 3.2rem;
-        }
-
-        .group__header-text {
-            width: 15.3rem;
-            padding: 1.2rem 2.2rem;
-            border-radius: 1.6rem;
-
-            &::after {
-                height: 0.2rem;
-            }
-        }
-
-        .group__list {
-            display: grid;
-            gap: 1.6rem;
-            grid-auto-rows: 10.9rem;
-        }
-
-        .group__item {
-            font-size: 7.2rem;
-            padding: 1rem 2.2rem;
-            border-radius: 1.6rem;
-        }
-
-        .window-number {
-            &::after {
-                height: 0.4rem;
-            }
-        }
-
-        .arrow-icon {
-            width: 6rem;
-            height: 6rem;
-        }
-    }
+    gap: 1.6rem;
+    width: 100%;
 }
 
 .group__headers {
     display: flex;
-    gap: 1.4rem;
+    gap: 3.2rem;
 }
 
 .group__header {
     display: flex;
     justify-content: space-between;
-    height: 4.2rem;
-    font-size: 1.6rem;
+    height: 10rem;
+    font-size: 3.2rem;
     text-transform: uppercase;
     flex-grow: 1;
 }
 
 .group__header-text {
     text-align: center;
-    padding: 0.2rem 0.8rem;
+    padding: 1.2rem 2.2rem;
     position: relative;
-    background: #ffffff33;
-    border-radius: 0.4rem;
-    width: 7rem;
+    background: var(--background-inactive-color);
+    border-radius: 3.2rem;
+    width: 14.9rem;
 
     &::after {
         content: '';
         display: block;
         width: 70%;
-        height: 0.1rem;
-        background: #fff;
+        height: 0.3rem;
+        background: var(--text-color);
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
@@ -184,34 +94,32 @@ const classes = computed(() => ({
 }
 
 .group__list {
+    --max-rows: v-bind(maxRows);
     display: grid;
-    gap: 0.4rem;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(var(--max-rows), 11.4rem);
+    column-gap: 3.2rem;
+    gap: 1.6rem;
     margin: 0;
     padding: 0;
     overflow: hidden;
     list-style-type: none;
     position: relative;
     align-items: stretch;
-    grid-auto-rows: 4.6rem;
 }
 
 .group__item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 3.2rem;
+    font-size: 10rem;
     text-align: center;
-    padding: 0.2rem 0.8rem;
+    padding: 2.2rem;
     background: var(--background-inactive-color);
-    border-radius: 0.4rem;
+    border-radius: 4.4rem;
 
     &--active {
         background: var(--background-active-color);
-        color: var(--active-text-color);
-
-        & .window-number::after {
-            background: var(--active-text-color);
-        }
     }
 }
 
@@ -220,21 +128,6 @@ const classes = computed(() => ({
     display: flex;
     align-items: center;
     justify-content: space-between;
-}
-
-.window-number {
-    position: relative;
-
-    &::after {
-        content: '';
-        display: block;
-        width: 100%;
-        height: 0.15rem;
-        background: #fff;
-
-        bottom: 0;
-        position: absolute;
-    }
 }
 
 .list-move {
@@ -254,27 +147,8 @@ const classes = computed(() => ({
     opacity: 0;
 }
 
-.datetime {
-    display: flex;
-    justify-content: space-between;
-    background: #00000033;
-    align-items: flex-end;
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    height: 3.6rem;
-    width: calc(50% - 0.7rem);
-    border-radius: 0.4rem;
-    font-size: 1.5rem;
-    padding: 0.2rem 0.8rem;
-}
-
-.time {
-    font-size: 2.4rem;
-}
-
 .arrow-icon {
-    width: 2.4rem;
-    height: 2.4rem;
+    width: 4rem;
+    height: 4rem;
 }
 </style>
