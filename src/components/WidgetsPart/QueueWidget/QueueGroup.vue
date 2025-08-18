@@ -17,7 +17,7 @@
                 :key="item.number"
             >
                 <div class="left-part">
-                    <span class="number">{{ item.number }}</span>
+                    <span class="number">{{ item.number.padStart(4, '0') }}</span>
                     <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
                             fill-rule="evenodd"
@@ -27,7 +27,7 @@
                         />
                     </svg>
                 </div>
-                <span class="window-number">{{ item.window }}</span>
+                <span class="window-number">{{ item.window.padStart(2, '0') }}</span>
             </li>
         </TransitionGroup>
     </div>
@@ -35,11 +35,13 @@
 
 <script setup lang="ts">
 import { QueueItem } from '@/api/types.ts';
+import { inject } from 'vue';
 
 defineProps<{
     items: QueueItem[];
-    isLandscapeScreen: boolean;
 }>();
+
+const isLandscapeScreen = inject('isLandscapeScreen');
 </script>
 
 <style scoped lang="scss">
@@ -114,7 +116,7 @@ defineProps<{
 }
 
 .left-part {
-    width: 55%;
+    width: 29rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -173,6 +175,9 @@ defineProps<{
     .arrow-icon {
         width: 2rem;
         height: 2rem;
+    }
+    .left-part {
+        width: 11rem;
     }
 }
 </style>

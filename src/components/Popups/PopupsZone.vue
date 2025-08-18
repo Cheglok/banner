@@ -1,46 +1,26 @@
 <template>
     <div class="outer-block" :style="{ transform: `translateY(${translateY}rem)` }">
-        <WeatherPopup
-            v-if="currentComponent === 'weather'"
-            :data="widgets.weather"
-            key="weather"
-            :is-landscape-screen="isLandscapeScreen"
-        />
-        <CurrencyPopup
-            v-if="currentComponent === 'currency'"
-            :is-landscape-screen="isLandscapeScreen"
-            :data="widgets.currency"
-            key="currency"
-        />
-        <TrafficsPopup
-            v-if="currentComponent === 'traffics'"
-            :is-landscape-screen="isLandscapeScreen"
-            :data="widgets.traffics"
-            key="traffics"
-        />
-        <LocationPopup
-            v-if="currentComponent === 'location'"
-            :is-landscape-screen="isLandscapeScreen"
-            :data="widgets.location"
-            key="location"
-        />
+        <WeatherPopup v-if="currentComponent === 'weather'" :data="widgets.weather" key="weather" />
+        <CurrencyPopup v-if="currentComponent === 'currency'" :data="widgets.currency" key="currency" />
+        <TrafficsPopup v-if="currentComponent === 'traffics'" :data="widgets.traffics" key="traffics" />
+        <LocationPopup v-if="currentComponent === 'location'" :data="widgets.location" key="location" />
     </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, computed, ComputedRef } from 'vue';
+import { ref, onMounted, computed, ComputedRef, inject } from 'vue';
 import WeatherPopup from '@/components/Popups/WeatherPopup.vue';
 import { Widgets } from '@/api/types.ts';
 import CurrencyPopup from '@/components/Popups/CurrencyPopup.vue';
 import TrafficsPopup from '@/components/Popups/TrafficsPopup.vue';
 import LocationPopup from '@/components/Popups/LocationPopup.vue';
-import { sleep } from '@/helpers/sleep.ts';
-import { DEFAULT_POPUP_ANIMATION_DURATION } from '@/constants/constants.ts';
+import { sleep } from '@/helpers';
 
 const props = defineProps<{
     widgets: Widgets;
-    isLandscapeScreen: boolean;
 }>();
+
+const popupsAnimationDuration: number = inject('popupsAnimationDuration') as number;
 
 const filteredWidgets = computed(() => {
     return Object.keys(props.widgets).filter((widget) => widget !== 'queue');
@@ -53,32 +33,34 @@ const currentComponent: ComputedRef<keyof Widgets> = computed(
 const translateY = ref(22); // Начинаем за пределами экрана снизу
 
 const showNextPopup = async () => {
-    let popupAnimationDuration;
+    let animationDuration;
     switch (currentComponent.value) {
         case 'weather':
-            popupAnimationDuration = (props.widgets.weather.animationDuration || DEFAULT_POPUP_ANIMATION_DURATION) * 2;
+            animationDuration = (props.widgets.weather.animationDuration || popupsAnimationDuration) * 2;
             break;
         case 'currency':
-            popupAnimationDuration =
-                (props.widgets.currency.animationDuration || DEFAULT_POPUP_ANIMATION_DURATION) *
+            animationDuration =
+                (props.widgets.currency.animationDuration || popupsAnimationDuration) *
                 Object.keys(props.widgets.currency.currency_rates).length;
             break;
         case 'traffics':
-            popupAnimationDuration = props.widgets.traffics.animationDuration || DEFAULT_POPUP_ANIMATION_DURATION;
+            animationDuration = props.widgets.traffics.animationDuration || popupsAnimationDuration;
             break;
         case 'location':
-            popupAnimationDuration =
-                (props.widgets.location.animationDuration || DEFAULT_POPUP_ANIMATION_DURATION) *
+            animationDuration =
+                (props.widgets.location.animationDuration || popupsAnimationDuration) *
                 props.widgets.location.routes.length;
             break;
         default:
-            popupAnimationDuration = DEFAULT_POPUP_ANIMATION_DURATION;
+            animationDuration = popupsAnimationDuration;
     }
     translateY.value = 0; // компонент появляется
-    await sleep(popupAnimationDuration); // компонент существует до конца анимации
+    await sleep(800); // задержка на появление
+    await sleep(animationDuration); // компонент существует до конца анимации
+    await sleep(800); // успеть посмотреть последний блок
     translateY.value = 22;
-    await sleep(500); // компонент исчезает
-    await sleep(1000); // между компонентами
+    await sleep(800); // компонент исчезает
+    await sleep(1000); // перерыв между компонентами
     currentIndex.value = (currentIndex.value + 1) % Object.keys(filteredWidgets.value).length; // переход к следующему компоненту
     showNextPopup();
 };
@@ -92,6 +74,6 @@ onMounted(() => {
 .outer-block {
     overflow: hidden;
     position: relative;
-    transition: transform 0.5s ease;
+    transition: transform 0.8s ease;
 }
 </style>

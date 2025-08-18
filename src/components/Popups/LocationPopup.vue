@@ -1,6 +1,6 @@
 <template>
     <div
-        class="location"
+        class="location popup"
         v-for="route in data.routes"
         :key="route.name"
         :style="{ transform: `translateY(${translateValue}rem)` }"
@@ -39,19 +39,21 @@
 
 <script setup lang="ts">
 import { LocationWidgetData } from '@/api/types.ts';
-import { pluralizeRussian } from '@/helpers/pluralizeWord.ts';
-import { computed, onMounted, ref } from 'vue';
-import { sleep } from '@/helpers/sleep.ts';
-import { DEFAULT_POPUP_ANIMATION_DURATION } from '@/constants/constants.ts';
+import { computed, inject, onMounted, ref } from 'vue';
+import { pluralizeRussian, sleep } from '@/helpers';
 
 const props = defineProps<{
     data: LocationWidgetData;
-    isLandscapeScreen: boolean;
 }>();
+
+const isLandscapeScreen = inject('isLandscapeScreen');
+const popupsAnimationDuration: number = inject('popupsAnimationDuration') as number;
 
 const currentIndex = ref(0);
 
-const translateValue = computed(() => currentIndex.value * (-1 * (props.isLandscapeScreen ? 18 : 6.6)));
+const translateValue = computed(() => {
+    return currentIndex.value * (isLandscapeScreen ? -18 : -6.6);
+});
 
 function formatMinutes(minutes: number) {
     const hours = Math.floor(minutes / 60);
@@ -85,11 +87,11 @@ const showNextSlide = () => {
             currentIndex.value++;
             showNextSlide();
         }
-    }, props.data.animationDuration || DEFAULT_POPUP_ANIMATION_DURATION);
+    }, props.data.animationDuration || popupsAnimationDuration);
 };
 
 onMounted(async () => {
-    await sleep(500);
+    await sleep(800);
     showNextSlide();
 });
 </script>
@@ -98,8 +100,7 @@ onMounted(async () => {
 .location {
     height: 18rem;
     border-radius: 4.4rem;
-    background: linear-gradient(88deg, #00bb8c 0%, #5ad303 184.89%);
-    transition: transform 0.5s ease;
+    transition: transform 0.8s ease;
     padding: 3.2rem;
     color: var(--text-color);
     font-weight: 700;

@@ -4,17 +4,17 @@
             "queue": {
                 "queue": [
                     {
-                        "number": "012",
-                        "window": "28",
+                        "number": "2",
+                        "window": "8",
                         "active": true
                     },
                     {
-                        "number": "127",
+                        "number": "1111",
                         "window": "28"
                     },
                     {
                         "number": "133",
-                        "window": "122"
+                        "window": "22"
                     },
                     {
                         "number": "14",
@@ -35,7 +35,7 @@
                     },
                     {
                         "number": "18",
-                        "window": "122",
+                        "window": "2",
                         "active": true
                     },
                     {
@@ -92,32 +92,7 @@
                         "pedestrianTime": 91
                     }
                 ],
-                "animationDuration": 3000
-            },
-            "currency": {
-                "currency_rates": {
-                    "usd": {
-                        "sell": 110.01,
-                        "buy": "507.50"
-                    },
-                    "eur": {
-                        "sell": 100.0,
-                        "buy": 531.50
-                    },
-                    "rub": {
-                        "sell": 50.88,
-                        "buy": 5.85
-                    },
-                    "gbp": {
-                        "sell": 50.88,
-                        "buy": 5.85
-                    },
-                    "cny": {
-                        "sell": 100.0,
-                        "buy": 531.5
-                    }
-                },
-                "animationDuration": 3000
+                "animationDuration": 2000
             },
             "weather": {
                 "title": "Погода в Петропавловске",
@@ -157,14 +132,15 @@
                         "icon": "d_c1_r3_st"
                     }
                 ],
-                "animationDuration": 3000
+                "animationDuration": 4000
             },
             "traffics": {
                 "level": 1,
                 "description": "Низкая загрузка на дорогах",
-                "animationDuration": 3000
+                "animationDuration": 4000
             }
-        }
+        },
+        "animationDuration": 4000
     },
     "bannersPart": {
         "banners": [

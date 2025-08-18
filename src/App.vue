@@ -1,6 +1,6 @@
 <template>
     <div v-if="terminalData" class="frame">
-        <WidgetsPart :widgets-data="terminalData.widgetsPart" :is-landscape-screen="isLandscapeScreen" />
+        <WidgetsPart :widgets-data="terminalData.widgetsPart" />
         <BannersPart :banners-data="terminalData.bannersPart" />
     </div>
 </template>
@@ -8,11 +8,14 @@
 <script setup lang="ts">
 import WidgetsPart from '@/components/WidgetsPart/WidgetsPart.vue';
 import BannersPart from '@/components/BannersPart/BannersPart.vue';
-import { onMounted, Ref, ref } from 'vue';
+import { provide, Ref, ref } from 'vue';
 import { TerminalData } from '@/api/types.ts';
 
 const terminalData: Ref<null | TerminalData> = ref(null);
-const isLandscapeScreen = ref(false);
+const isLandscapeScreen = window.innerWidth > window.innerHeight;
+
+provide('isLandscapeScreen', isLandscapeScreen);
+provide('popupsAnimationDuration', terminalData.value?.widgetsPart?.animationDuration ?? 4000);
 
 function loadData() {
     fetch('/data.json')
@@ -22,13 +25,9 @@ function loadData() {
 
 loadData();
 setInterval(loadData, 1000);
-
-onMounted(() => {
-    isLandscapeScreen.value = window.innerWidth > window.innerHeight;
-});
 </script>
 
-<style scoped>
+<style>
 .frame {
     display: grid;
     grid-template-rows: 4fr 6fr;

@@ -1,5 +1,5 @@
 <template>
-    <div class="traffics" :class="{ 'traffics--portrait': !isLandscapeScreen }">
+    <div class="traffics popup" :class="{ 'traffics--portrait': !isLandscapeScreen }">
         <div class="traffics__left">
             <h2 class="traffics__heading">Дорожная ситуация <span>cейчас</span></h2>
             <div class="traffics__description">{{ data.description }}</div>
@@ -13,13 +13,14 @@
 
 <script setup lang="ts">
 import { TrafficsWidgetData } from '@/api/types.ts';
-import { computed } from 'vue';
-import { pluralizeRussian } from '@/helpers/pluralizeWord.ts';
+import { computed, inject } from 'vue';
+import { pluralizeRussian } from '@/helpers';
 
 const props = defineProps<{
     data: TrafficsWidgetData;
-    isLandscapeScreen: boolean;
 }>();
+
+const isLandscapeScreen = inject('isLandscapeScreen');
 
 const trafficsLights = [
     '#4CBB17',
@@ -42,7 +43,6 @@ const currentColor = computed(() => trafficsLights[props.data.level - 1]);
 .traffics {
     height: 18rem;
     border-radius: 4.4rem;
-    background: linear-gradient(88deg, #00bb8c 0%, #5ad303 184.89%);
     display: flex;
     align-items: center;
     color: var(--text-color);

@@ -3,7 +3,7 @@
         v-for="(currency, currencyName) in data.currency_rates"
         :key="currencyName"
         :style="{ transform: `translateY(${translateValue}rem)` }"
-        class="currency"
+        class="currency popup"
         :class="{ 'currency--portrait': !isLandscapeScreen }"
     >
         <table class="table">
@@ -42,17 +42,18 @@
 
 <script setup lang="ts">
 import { CurrencyWidgetData } from '@/api/types.ts';
-import { computed, onMounted, ref } from 'vue';
-import { sleep } from '@/helpers/sleep.ts';
-import { DEFAULT_POPUP_ANIMATION_DURATION } from '@/constants/constants.ts';
+import { computed, inject, onMounted, ref } from 'vue';
+import { sleep } from '@/helpers';
 
 const props = defineProps<{
     data: CurrencyWidgetData;
-    isLandscapeScreen: boolean;
 }>();
 
+const isLandscapeScreen = inject('isLandscapeScreen');
+const popupsAnimationDuration: number = inject('popupsAnimationDuration') as number;
+
 const currentIndex = ref(0);
-const translateValue = computed(() => currentIndex.value * (-1 * (props.isLandscapeScreen ? 18 : 6.6)));
+const translateValue = computed(() => currentIndex.value * (-1 * (isLandscapeScreen ? 18 : 6.6)));
 
 const showNextSlide = () => {
     setTimeout(() => {
@@ -60,11 +61,11 @@ const showNextSlide = () => {
             currentIndex.value++;
             showNextSlide();
         }
-    }, props.data.animationDuration || DEFAULT_POPUP_ANIMATION_DURATION);
+    }, props.data.animationDuration || popupsAnimationDuration);
 };
 
 onMounted(async () => {
-    await sleep(500);
+    await sleep(800);
     showNextSlide();
 });
 </script>
@@ -73,9 +74,8 @@ onMounted(async () => {
 .currency {
     height: 18rem;
     border-radius: 4.4rem;
-    background: linear-gradient(88deg, #00bb8c 0%, #5ad303 184.89%);
     padding: 3.2rem;
-    transition: transform 0.5s ease;
+    transition: transform 0.8s ease;
 }
 
 .table {
@@ -115,8 +115,10 @@ onMounted(async () => {
     width: 7rem;
     height: 7rem;
     display: block;
-    background: #fff;
     border-radius: 50%;
+}
+.currency-icon {
+    background: #fff;
 }
 
 .currency--portrait {

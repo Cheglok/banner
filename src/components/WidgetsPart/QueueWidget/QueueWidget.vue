@@ -1,18 +1,19 @@
 <template>
     <div class="queue">
-        <QueueGroup :items="trimmedQueue" :is-landscape-screen="isLandscapeScreen" />
+        <QueueGroup :items="trimmedQueue" />
     </div>
 </template>
 
 <script setup lang="ts">
 import { QueueWidgetData } from '@/api/types.ts';
-import { computed } from 'vue';
+import { computed, inject } from 'vue';
 import QueueGroup from '@/components/WidgetsPart/QueueWidget/QueueGroup.vue';
 
 const props = defineProps<{
     data: QueueWidgetData;
-    isLandscapeScreen: boolean;
 }>();
+
+const isLandscapeScreen = inject('isLandscapeScreen');
 
 const sortedQueue = computed(() =>
     [...props.data.queue].sort((a, b) => {
@@ -26,7 +27,7 @@ const sortedQueue = computed(() =>
     })
 );
 
-const trimmedQueue = computed(() => sortedQueue.value.slice(0, props.isLandscapeScreen ? 10 : 8));
+const trimmedQueue = computed(() => sortedQueue.value.slice(0, isLandscapeScreen ? 10 : 8));
 </script>
 
 <style scoped lang="scss">

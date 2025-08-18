@@ -12,7 +12,7 @@
                 <span class="weather__description">{{ data.description }}</span>
             </div>
         </div>
-        <img class="weather__image" :src="`/images/weather-icons/${data.backgroundIcon}.svg`" />
+        <img class="weather__image" :src="`/images/weather-icons/${data.backgroundIcon}.svg`" alt="иконка погоды" />
     </div>
     <div
         class="popup weather-details"
@@ -31,23 +31,24 @@
 
 <script setup lang="ts">
 import { WeatherWidgetData } from '@/api/types.ts';
-import { onMounted, ref, computed } from 'vue';
-import { sleep } from '@/helpers/sleep.ts';
-import { DEFAULT_POPUP_ANIMATION_DURATION } from '@/constants/constants.ts';
+import { onMounted, ref, computed, inject } from 'vue';
+import { sleep } from '@/helpers';
 
 const props = defineProps<{
     data: WeatherWidgetData;
-    isLandscapeScreen: boolean;
 }>();
 
+const isLandscapeScreen = inject('isLandscapeScreen');
+const popupsAnimationDuration: number = inject('popupsAnimationDuration') as number;
+
 const currentIndex = ref(0);
-const translateValue = computed(() => currentIndex.value * (-1 * (props.isLandscapeScreen ? 18 : 6.6)));
+const translateValue = computed(() => currentIndex.value * (-1 * (isLandscapeScreen ? 18 : 6.6)));
 
 onMounted(async () => {
-    await sleep(500);
+    await sleep(800);
     setTimeout(() => {
         currentIndex.value = 1;
-    }, props.data.animationDuration || DEFAULT_POPUP_ANIMATION_DURATION);
+    }, props.data.animationDuration || popupsAnimationDuration);
 });
 </script>
 
@@ -55,8 +56,7 @@ onMounted(async () => {
 .popup {
     height: 18rem;
     border-radius: 4.4rem;
-    background: linear-gradient(88deg, #00bb8c 0%, #5ad303 184.89%);
-    transition: transform 0.5s ease;
+    transition: transform 0.8s ease;
 }
 
 .weather {

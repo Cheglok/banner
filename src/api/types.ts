@@ -5,6 +5,7 @@ export interface TerminalData {
 
 export interface WidgetsData {
     widgets: Widgets;
+    animationDuration?: number;
 }
 
 export interface Widgets {
