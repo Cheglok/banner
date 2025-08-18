@@ -1,9 +1,10 @@
 <template>
     <div
-        class="popup location"
+        class="location"
         v-for="route in data.routes"
         :key="route.name"
-        :style="{ transform: `translateY(${currentIndex * -18}rem)` }"
+        :style="{ transform: `translateY(${translateValue}rem)` }"
+        :class="{ 'location--portrait': !isLandscapeScreen }"
     >
         <header class="location__heading">
             <span class="location__tip">Вы здесь</span>
@@ -39,7 +40,7 @@
 <script setup lang="ts">
 import { LocationWidgetData } from '@/api/types.ts';
 import { pluralizeRussian } from '@/helpers/pluralizeWord.ts';
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { sleep } from '@/helpers/sleep.ts';
 import { DEFAULT_POPUP_ANIMATION_DURATION } from '@/constants/constants.ts';
 
@@ -49,6 +50,8 @@ const props = defineProps<{
 }>();
 
 const currentIndex = ref(0);
+
+const translateValue = computed(() => currentIndex.value * (-1 * (props.isLandscapeScreen ? 18 : 6.6)));
 
 function formatMinutes(minutes: number) {
     const hours = Math.floor(minutes / 60);
@@ -92,20 +95,22 @@ onMounted(async () => {
 </script>
 
 <style scoped lang="scss">
-.popup {
+.location {
     height: 18rem;
     border-radius: 4.4rem;
     background: linear-gradient(88deg, #00bb8c 0%, #5ad303 184.89%);
     transition: transform 0.5s ease;
-}
-
-.location {
     padding: 3.2rem;
     color: var(--text-color);
     font-weight: 700;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+}
+.location__location {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
 }
 
 .location__heading {
@@ -119,9 +124,6 @@ onMounted(async () => {
 
 .location__tip {
     opacity: 0.8;
-}
-
-.location__location {
 }
 
 .location__icon {
@@ -162,6 +164,42 @@ onMounted(async () => {
     }
     &.red {
         background: #ee1e12;
+    }
+}
+
+.location--portrait {
+    height: 6.6rem;
+    border-radius: 1.6rem;
+    padding: 0.8rem 1.2rem 1.2rem 1.2rem;
+
+    .location__heading {
+        font-size: 1.2rem;
+        line-height: 0.8rem;
+        border-bottom: 0.1rem solid var(--text-color);
+        padding-bottom: 0.3rem;
+    }
+
+    .location__icon {
+        width: 1.2rem;
+        height: 1.2rem;
+    }
+
+    .location__rout {
+        font-size: 1.6rem;
+        line-height: 1.1rem;
+        border-bottom: 0.1rem solid var(--text-color);
+        padding: 0 0 0.3rem 0;
+    }
+
+    .location__time {
+        padding: 0.3rem 0.6rem;
+        height: 1.4rem;
+        font-size: 1.2rem;
+
+        & svg {
+            width: 1rem;
+            height: 1rem;
+        }
     }
 }
 </style>

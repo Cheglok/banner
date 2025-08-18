@@ -1,5 +1,5 @@
 <template>
-    <div class="group" :class="classes">
+    <div class="group" :class="{ 'group--portrait': !isLandscapeScreen }">
         <div class="group__headers">
             <div class="group__header">
                 <span class="group__header-text">нөмір номер</span>
@@ -35,20 +35,11 @@
 
 <script setup lang="ts">
 import { QueueItem } from '@/api/types.ts';
-import { computed } from 'vue';
 
-const props = defineProps<{
+defineProps<{
     items: QueueItem[];
     isLandscapeScreen: boolean;
 }>();
-
-const classes = computed(() => ({
-    'group--portrait': !props.isLandscapeScreen,
-}));
-
-const maxRows = computed(() => {
-    return props.isLandscapeScreen ? 5 : 4;
-});
 </script>
 
 <style scoped lang="scss">
@@ -94,10 +85,9 @@ const maxRows = computed(() => {
 }
 
 .group__list {
-    --max-rows: v-bind(maxRows);
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: repeat(var(--max-rows), 11.4rem);
+    grid-template-rows: repeat(5, 11.4rem);
     column-gap: 3.2rem;
     gap: 1.6rem;
     margin: 0;
@@ -150,5 +140,39 @@ const maxRows = computed(() => {
 .arrow-icon {
     width: 4rem;
     height: 4rem;
+}
+
+.group--portrait {
+    gap: 0.4rem;
+    .group__headers {
+        gap: 1.2rem;
+    }
+    .group__header {
+        height: 2.4rem;
+        font-size: 1rem;
+    }
+    .group__header-text {
+        padding: 0.2rem 0.8rem;
+        border-radius: 0.8rem;
+        width: 5rem;
+
+        &::after {
+            height: 0.1rem;
+        }
+    }
+    .group__list {
+        grid-template-rows: repeat(4, 3.8rem);
+        gap: 0.4rem;
+        column-gap: 1.2rem;
+    }
+    .group__item {
+        font-size: 3.2rem;
+        padding: 0.8rem;
+        border-radius: 0.8rem;
+    }
+    .arrow-icon {
+        width: 2rem;
+        height: 2rem;
+    }
 }
 </style>

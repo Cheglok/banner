@@ -38,8 +38,7 @@ const trimmedQueue = computed(() => sortedQueue.value.slice(0, props.isLandscape
     }
 
     color: var(--text-color);
-    border-radius: 2.2rem;
-    transition: var(--widget-transition);
+    transition: all 0.3s ease-in-out;
     font-weight: bold;
     overflow: hidden;
 }

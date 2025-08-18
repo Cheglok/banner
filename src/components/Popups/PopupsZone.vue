@@ -90,7 +90,6 @@ onMounted(() => {
 
 <style scoped>
 .outer-block {
-    width: 100%;
     overflow: hidden;
     position: relative;
     transition: transform 0.5s ease;

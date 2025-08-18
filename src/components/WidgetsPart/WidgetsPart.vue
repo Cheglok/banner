@@ -1,13 +1,12 @@
 <template>
-    <div class="widgets">
+    <div class="widgets" :class="{ 'widgets--portrait': !isLandscapeScreen }">
         <QueueWidget
             :data="widgetsData.widgets.queue"
             key="queue"
             :is-landscape-screen="isLandscapeScreen"
             class="widgets__top"
         />
-        <PopupsZone class="widgets__bottom" :widgets="widgetsData.widgets" :is-landscape-screen="isLandscapeScreen">
-        </PopupsZone>
+        <PopupsZone class="widgets__bottom" :widgets="widgetsData.widgets" :is-landscape-screen="isLandscapeScreen" />
     </div>
 </template>
 
@@ -41,14 +40,12 @@ defineProps<{
     border-radius: 4.4rem;
     flex-shrink: 0;
 }
-
-//.v-enter-active,
-//.v-leave-active {
-//    transition: opacity 0.5s ease;
-//}
-//
-//.v-enter-from,
-//.v-leave-to {
-//    opacity: 0;
-//}
+.widgets--portrait {
+    padding: 1.6rem;
+    gap: 1.6rem;
+    & .widgets__bottom {
+        height: 6.6rem;
+        border-radius: 1.6rem;
+    }
+}
 </style>

@@ -22,7 +22,7 @@ body {
 
 :root {
     font-family: Gilroy, sans-serif;
-    --widget-transition: all 0.3s ease-in-out;
+    --text-color: #fff;
 }
 
 @media (orientation: landscape) {
@@ -33,9 +33,6 @@ body {
 
 @media (orientation: portrait) {
     :root {
-        font-size: calc(2.60417 * 1vw);
+        font-size: calc(1.302 * 1vh);
     }
-}
-:root {
-    --text-color: #fff;
 }

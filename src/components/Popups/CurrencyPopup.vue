@@ -2,8 +2,9 @@
     <div
         v-for="(currency, currencyName) in data.currency_rates"
         :key="currencyName"
-        :style="{ transform: `translateY(${currentIndex * -18}rem)` }"
-        class="popup"
+        :style="{ transform: `translateY(${translateValue}rem)` }"
+        class="currency"
+        :class="{ 'currency--portrait': !isLandscapeScreen }"
     >
         <table class="table">
             <thead>
@@ -41,7 +42,7 @@
 
 <script setup lang="ts">
 import { CurrencyWidgetData } from '@/api/types.ts';
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { sleep } from '@/helpers/sleep.ts';
 import { DEFAULT_POPUP_ANIMATION_DURATION } from '@/constants/constants.ts';
 
@@ -51,6 +52,7 @@ const props = defineProps<{
 }>();
 
 const currentIndex = ref(0);
+const translateValue = computed(() => currentIndex.value * (-1 * (props.isLandscapeScreen ? 18 : 6.6)));
 
 const showNextSlide = () => {
     setTimeout(() => {
@@ -68,7 +70,7 @@ onMounted(async () => {
 </script>
 
 <style scoped lang="scss">
-.popup {
+.currency {
     height: 18rem;
     border-radius: 4.4rem;
     background: linear-gradient(88deg, #00bb8c 0%, #5ad303 184.89%);
@@ -92,7 +94,7 @@ onMounted(async () => {
 
         &.cell_heading {
             width: 29%;
-            padding-left: 60px;
+            padding-left: 6rem;
         }
     }
 
@@ -101,7 +103,7 @@ onMounted(async () => {
         letter-spacing: 0;
         vertical-align: middle;
         text-transform: lowercase;
-        padding-left: 60px;
+        padding-left: 6rem;
     }
 }
 .icons {
@@ -115,5 +117,30 @@ onMounted(async () => {
     display: block;
     background: #fff;
     border-radius: 50%;
+}
+
+.currency--portrait {
+    height: 6.6rem;
+    border-radius: 1.6rem;
+    padding: 1.2rem;
+    .table {
+        th {
+            font-size: 1.2rem;
+            line-height: 0.8rem;
+            padding: 0 0 0.8rem 0;
+            &.cell_heading {
+                padding-left: 2.2rem;
+            }
+        }
+        td.cell_price {
+            font-size: 2.5rem;
+            padding-left: 2.2rem;
+        }
+    }
+    .currency-icon,
+    .flag-icon {
+        width: 2.6rem;
+        height: 2.6rem;
+    }
 }
 </style>

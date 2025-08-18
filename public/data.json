@@ -169,11 +169,6 @@
     "bannersPart": {
         "banners": [
             {
-                "type": "video",
-                "src": "/video/vlad3.mp4",
-                "animationDuration": 5000
-            },
-            {
                 "type": "image",
                 "src": "/images/banners/astana_motors.png"
             },

@@ -1,5 +1,5 @@
 <template>
-    <div class="popup traffics">
+    <div class="traffics" :class="{ 'traffics--portrait': !isLandscapeScreen }">
         <div class="traffics__left">
             <h2 class="traffics__heading">Дорожная ситуация <span>cейчас</span></h2>
             <div class="traffics__description">{{ data.description }}</div>
@@ -39,12 +39,10 @@ const currentColor = computed(() => trafficsLights[props.data.level - 1]);
 </script>
 
 <style scoped lang="scss">
-.popup {
+.traffics {
     height: 18rem;
     border-radius: 4.4rem;
     background: linear-gradient(88deg, #00bb8c 0%, #5ad303 184.89%);
-}
-.traffics {
     display: flex;
     align-items: center;
     color: var(--text-color);
@@ -92,5 +90,35 @@ const currentColor = computed(() => trafficsLights[props.data.level - 1]);
     right: 16rem;
     top: 7rem;
     opacity: 0.8;
+}
+.traffics--portrait {
+    height: 6.6rem;
+    border-radius: 1.6rem;
+    .traffics__left {
+        padding: 1.2rem;
+    }
+    .traffics__heading {
+        font-size: 1.4rem;
+        line-height: 1rem;
+        margin: 0 0 1.2rem 0;
+    }
+    .traffics__description {
+        font-size: 1.2rem;
+        line-height: 0.8rem;
+        padding: 0.6rem 0.8rem;
+        border-radius: 0.8rem;
+    }
+    .traffics__level {
+        width: 6.6rem;
+        border-radius: 11rem 0 0 11rem;
+        font-size: 5.2rem;
+        box-shadow: 0 0.2rem 0.1rem 0 rgba(0, 0, 0, 0.25);
+    }
+    .traffics__plural {
+        font-size: 1.2rem;
+        line-height: 0.6rem;
+        right: 6rem;
+        top: 3rem;
+    }
 }
 </style>

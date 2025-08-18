@@ -1,5 +1,9 @@
 <template>
-    <div class="popup weather" :style="{ transform: `translateY(${currentIndex * -18}rem)` }">
+    <div
+        class="popup weather"
+        :class="{ 'popup--portrait': !isLandscapeScreen }"
+        :style="{ transform: `translateY(${translateValue}rem)` }"
+    >
         <div class="weather__info">
             <span class="weather__temperature">{{ data.temperature }}º</span>
             <div class="weather__heading-container">
@@ -10,7 +14,11 @@
         </div>
         <img class="weather__image" :src="`/images/weather-icons/${data.backgroundIcon}.svg`" />
     </div>
-    <div class="popup weather-details" :style="{ transform: `translateY(${currentIndex * -18}rem)` }">
+    <div
+        class="popup weather-details"
+        :class="{ 'popup--portrait': !isLandscapeScreen }"
+        :style="{ transform: `translateY(${translateValue}rem)` }"
+    >
         <ul class="weather__hours">
             <li v-for="hour in data.hours" class="weather__hour" :key="hour.hour">
                 <div class="weather__hour-name">{{ hour.hour }}</div>
@@ -23,7 +31,7 @@
 
 <script setup lang="ts">
 import { WeatherWidgetData } from '@/api/types.ts';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, computed } from 'vue';
 import { sleep } from '@/helpers/sleep.ts';
 import { DEFAULT_POPUP_ANIMATION_DURATION } from '@/constants/constants.ts';
 
@@ -33,6 +41,7 @@ const props = defineProps<{
 }>();
 
 const currentIndex = ref(0);
+const translateValue = computed(() => currentIndex.value * (-1 * (props.isLandscapeScreen ? 18 : 6.6)));
 
 onMounted(async () => {
     await sleep(500);
@@ -96,6 +105,7 @@ onMounted(async () => {
 
 .weather-details {
     padding: 2rem;
+    color: var(--text-color);
 }
 
 .weather__hours {
@@ -104,19 +114,17 @@ onMounted(async () => {
     list-style: none;
     padding: 0;
     margin: 0;
-    color: var(--text-color);
     height: 100%;
 }
 
 .weather__hour {
     display: grid;
     justify-items: center;
-    gap: 10px;
-    color: #fff;
+    gap: 1rem;
     text-align: center;
     font-weight: 700;
-    font-size: 32px;
-    line-height: 22px;
+    font-size: 3.2rem;
+    line-height: 2.2rem;
 }
 
 .weather__hour-name {
@@ -127,5 +135,38 @@ onMounted(async () => {
 .weather__icon {
     width: 7rem;
     height: 7rem;
+}
+
+.popup--portrait {
+    height: 6.6rem;
+    border-radius: 1.6rem;
+    &.weather {
+        padding: 1.2rem;
+    }
+    .weather__temperature {
+        font-size: 6rem;
+        line-height: 6rem;
+        letter-spacing: -0.2rem;
+    }
+    .weather__heading-container {
+        font-size: 1rem;
+    }
+    &.weather-details {
+        padding: 0.8rem;
+    }
+    .weather__hour {
+        gap: 0.4rem;
+        font-weight: 700;
+        font-size: 1.2rem;
+        line-height: 0.8rem;
+    }
+    .weather__hour-name {
+        font-size: 1rem;
+        line-height: 0.7rem;
+    }
+    .weather__icon {
+        width: 2.6rem;
+        height: 2.6rem;
+    }
 }
 </style>
