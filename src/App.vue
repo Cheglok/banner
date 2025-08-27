@@ -33,7 +33,7 @@ setInterval(loadData, 1000);
     grid-template-rows: 4fr 6fr;
     width: 100vw;
     height: 100vh;
-    background: black;
+    background: #1e1e1e;
     overflow: hidden;
     @media (orientation: landscape) {
         grid-template-rows: none;

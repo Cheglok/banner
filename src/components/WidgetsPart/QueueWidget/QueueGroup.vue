@@ -2,12 +2,20 @@
     <div class="group" :class="{ 'group--portrait': !isLandscapeScreen }">
         <div class="group__headers">
             <div class="group__header">
-                <span class="group__header-text">нөмір номер</span>
-                <span class="group__header-text">терезе окно</span>
+                <span class="group__header-text"
+                    >нөмір<template v-if="!isLandscapeScreen">/</template><template v-else><br /></template>номер</span
+                >
+                <span class="group__header-text"
+                    >терезе<template v-if="!isLandscapeScreen">/</template><template v-else><br /></template>окно</span
+                >
             </div>
             <div class="group__header">
-                <span class="group__header-text">нөмір номер</span>
-                <span class="group__header-text">терезе окно</span>
+                <span class="group__header-text"
+                    >нөмір<template v-if="!isLandscapeScreen">/</template><template v-else><br /></template>номер</span
+                >
+                <span class="group__header-text"
+                    >терезе<template v-if="!isLandscapeScreen">/</template><template v-else><br /></template>окно</span
+                >
             </div>
         </div>
         <TransitionGroup name="list" tag="ul" class="group__list">
@@ -150,16 +158,16 @@ const isLandscapeScreen = inject('isLandscapeScreen');
         gap: 1.2rem;
     }
     .group__header {
-        height: 2.4rem;
+        height: 1.4rem;
         font-size: 1rem;
     }
     .group__header-text {
-        padding: 0.2rem 0.8rem;
-        border-radius: 0.8rem;
-        width: 5rem;
+        padding: 0.2rem 0.4rem 0 0.4rem;
+        border-radius: 0.4rem;
+        width: unset;
 
         &::after {
-            height: 0.1rem;
+            display: none;
         }
     }
     .group__list {
