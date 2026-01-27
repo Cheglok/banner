@@ -22,17 +22,24 @@ body {
 
 :root {
     font-family: Gilroy, sans-serif;
-    --widget-transition: all 0.3s ease-in-out;
+    --text-color: #fff;
+}
+.popup {
+    background: linear-gradient(88deg, #00bb8c 0%, #5ad303 184.89%);
 }
 
 @media (orientation: landscape) {
     :root {
-        font-size: calc(1.3021 * 1vh);
+        font-size: calc(0.926 * 1vh);
+    }
+    .popup {
+        border: 0.2rem solid rgba(255, 255, 255, 0.4);
+        background: linear-gradient(90deg, #616161 0%, #2c2c2c 100%);
     }
 }
 
 @media (orientation: portrait) {
     :root {
-        font-size: calc(2.60417 * 1vw);
+        font-size: calc(1.302 * 1vh);
     }
 }

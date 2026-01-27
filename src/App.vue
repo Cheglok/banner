@@ -1,28 +1,21 @@
 <template>
-    <div v-if="terminalData" class="frame" :class="classes" @click="isLandscapeScreen = !isLandscapeScreen">
-        <div class="frame__top">
-            <WidgetsPart
-                :widgets-data="terminalData.widgetsPart"
-                :is-landscape-screen="isLandscapeScreen"
-                :device-type="terminalData.deviceType"
-            />
-        </div>
-        <div class="frame__bottom">
-            <BannersPart :banners-data="terminalData.bannersPart" :device-type="terminalData.deviceType" />
-        </div>
+    <div v-if="terminalData" class="frame">
+        <WidgetsPart :widgets-data="terminalData.widgetsPart" />
+        <BannersPart :banners-data="terminalData.bannersPart" />
     </div>
 </template>
 
 <script setup lang="ts">
 import WidgetsPart from '@/components/WidgetsPart/WidgetsPart.vue';
 import BannersPart from '@/components/BannersPart/BannersPart.vue';
-import { computed, onMounted, Ref, ref, watch } from 'vue';
-import { DEVICE_TYPE, TerminalData } from '@/api/types.ts';
+import { provide, Ref, ref } from 'vue';
+import { TerminalData } from '@/api/types.ts';
 
 const terminalData: Ref<null | TerminalData> = ref(null);
-const isLandscapeScreen = ref(false);
+const isLandscapeScreen = window.innerWidth > window.innerHeight;
 
-const classes = computed(() => (terminalData.value?.deviceType ? terminalData.value.deviceType : ''));
+provide('isLandscapeScreen', isLandscapeScreen);
+provide('popupsAnimationDuration', terminalData.value?.widgetsPart?.animationDuration ?? 4000);
 
 function loadData() {
     fetch('/data.json')
@@ -32,50 +25,19 @@ function loadData() {
 
 loadData();
 setInterval(loadData, 1000);
-
-onMounted(() => {
-    isLandscapeScreen.value = window.innerWidth > window.innerHeight;
-});
-
-watch(
-    () => terminalData.value?.deviceType,
-    (newValue) => {
-        if (newValue === DEVICE_TYPE.TVinCON || newValue === DEVICE_TYPE.TV3840x2160) {
-            document.documentElement.style.fontSize = 'calc(0.52084 * 1vw)';
-        }
-    },
-    { immediate: true }
-);
 </script>
 
-<style scoped>
+<style>
 .frame {
     display: grid;
     grid-template-rows: 4fr 6fr;
     width: 100vw;
     height: 100vh;
-    background: black;
+    background: #1e1e1e;
     overflow: hidden;
     @media (orientation: landscape) {
         grid-template-rows: none;
-        grid-template-columns: 50vh auto;
+        grid-template-columns: 53% 47%;
     }
-}
-
-.TVinCON {
-    grid-template-rows: none;
-    grid-template-columns: 4fr 6fr;
-}
-.TV3840x2160 {
-    grid-template-rows: none;
-    grid-template-columns: 560fr 494fr;
-}
-
-.frame__top {
-    position: relative;
-}
-
-.frame__bottom {
-    position: relative;
 }
 </style>

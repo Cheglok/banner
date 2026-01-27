@@ -1,75 +1,121 @@
 <template>
-    <TransitionGroup>
-        <WeatherWidget
-            v-if="currentComponent === 'weather'"
-            :data="widgetsData.widgets.weather"
-            key="weather"
-            :full-height="isLandscapeScreen"
-        />
-        <CurrencyWidget
-            v-if="currentComponent === 'currency'"
-            :data="widgetsData.widgets.currency"
-            key="currency"
-            :full-height="isLandscapeScreen"
-        />
-        <TrafficsWidget
-            v-if="currentComponent === 'traffics'"
-            :data="widgetsData.widgets.traffics"
-            key="traffics"
-            :full-height="isLandscapeScreen"
-        />
-        <QueueWidget
-            v-if="currentComponent === 'queue'"
-            :data="widgetsData.widgets.queue"
-            :device-type="deviceType"
-            key="queue"
-            :full-height="isLandscapeScreen"
-        />
-        <LocationWidget
-            v-if="currentComponent === 'location'"
-            :data="widgetsData.widgets.location"
-            key="location"
-            :full-height="isLandscapeScreen"
-        />
-    </TransitionGroup>
+    <div class="widgets">
+        <header class="widgets__header" :class="{ 'widgets__header--portrait': !isLandscapeScreen }">
+            <span>{{ formattedTime }}</span>
+            <img src="/images/logo.svg" alt="logo" class="widgets__logo" />
+        </header>
+        <div class="widgets__content" :class="{ 'widgets__content--portrait': !isLandscapeScreen }">
+            <QueueWidget :data="widgetsData.widgets.queue" key="queue" />
+            <div class="widgets__bottom-container">
+                <PopupsZone class="widgets__bottom" :widgets="widgetsData.widgets" />
+            </div>
+        </div>
+    </div>
 </template>
 
 <script setup lang="ts">
-import CurrencyWidget from '@/components/WidgetsPart/CurrencyWidget.vue';
-import TrafficsWidget from '@/components/WidgetsPart/TrafficsWidget.vue';
-import { computed, onMounted, ref } from 'vue';
-import WeatherWidget from '@/components/WidgetsPart/WeatherWidget.vue';
-
-import { DEVICE_TYPE, WidgetsData } from '@/api/types.ts';
+import { WidgetsData } from '@/api/types.ts';
 import QueueWidget from '@/components/WidgetsPart/QueueWidget/QueueWidget.vue';
-import LocationWidget from '@/components/WidgetsPart/LocationWidget.vue';
+import PopupsZone from '@/components/Popups/PopupsZone.vue';
+import { inject, onMounted, onUnmounted, ref } from 'vue';
 
-const props = defineProps<{
+defineProps<{
     widgetsData: WidgetsData;
-    isLandscapeScreen: boolean;
-    deviceType?: DEVICE_TYPE;
 }>();
 
-const currentComponent = computed(() => Object.keys(props.widgetsData.widgets)[currentIndex.value]);
+const isLandscapeScreen = inject('isLandscapeScreen');
+const formattedTime = ref('');
+let interval: number = 0;
+const updateDateTime = () => {
+    const now = new Date();
 
-const currentIndex = ref(0);
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const timeStr = `${hours}:${minutes}`;
+
+    const day = String(now.getDate()).padStart(2, '0');
+    const month = String(now.getMonth() + 1).padStart(2, '0'); // Месяцы начинаются с 0
+    const year = String(now.getFullYear()).slice(-2); // Последние 2 цифры года
+    const dateStr = `${day}.${month}.${year}`;
+
+    formattedTime.value = `${timeStr} / ${dateStr}`;
+};
 
 onMounted(() => {
-    if (!props.widgetsData.animationDuration) return;
-    setInterval(() => {
-        currentIndex.value = (currentIndex.value + 1) % Object.keys(props.widgetsData.widgets).length;
-    }, props.widgetsData.animationDuration);
+    updateDateTime();
+    // Обновляем каждую минуту
+    interval = setInterval(updateDateTime, 60000);
+});
+// Очищаем интервал при размонтировании
+onUnmounted(() => {
+    clearInterval(interval);
 });
 </script>
 
 <style scoped lang="scss">
-.v-enter-active,
-.v-leave-active {
-    transition: opacity 0.5s ease;
+.widgets__header {
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    padding: 1.2rem 3.2rem;
+    align-items: flex-end;
+    font-size: 3.2rem;
+    letter-spacing: -0.64px;
+    color: var(--text-color);
+    border-radius: 0 0 3.2rem 3.2rem;
+    background-color: #282828;
+    .widgets__logo {
+        width: 5rem;
+        height: 5rem;
+    }
 }
 
-.v-enter-from,
-.v-leave-to {
-    opacity: 0;
+.widgets__header--portrait {
+    padding: 0.4rem 1.6rem 0.2rem 1.6rem;
+    align-items: center;
+    font-size: 1.2rem;
+    letter-spacing: -0.24px;
+    border-radius: 0 0 1.2rem 1.2rem;
+    .widgets__logo {
+        width: 1.8rem;
+        height: 1.8rem;
+    }
+}
+
+.widgets__content {
+    position: relative;
+    padding: 1.2rem 3.2rem 3.2rem 3.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 3.2rem;
+    height: 100%;
+    overflow: hidden;
+}
+
+.widgets__bottom-container {
+    background-image: url('/images/watermark.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 80%;
+}
+
+.widgets__bottom {
+    height: 18rem;
+    border-radius: 4.4rem;
+    flex-shrink: 0;
+}
+
+.widgets__content--portrait {
+    padding: 0.4rem 1.6rem 1.6rem 1.6rem;
+    gap: 1.6rem;
+
+    .widgets__bottom-container {
+        background-size: 77%;
+    }
+
+    & .widgets__bottom {
+        height: 6.6rem;
+        border-radius: 1.6rem;
+    }
 }
 </style>

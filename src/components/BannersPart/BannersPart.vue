@@ -1,5 +1,5 @@
 <template>
-    <div class="banner-wrapper" :class="`banner-wrapper_${deviceType}`">
+    <div class="banner-wrapper">
         <TransitionGroup name="fade">
             <video
                 v-if="currentBanner.type === 'video'"
@@ -24,11 +24,10 @@
 
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
-import { BannersData, DEVICE_TYPE } from '@/api/types.ts';
+import { BannersData } from '@/api/types.ts';
 
 const props = defineProps<{
     bannersData: BannersData;
-    deviceType?: DEVICE_TYPE;
 }>();
 
 const currentIndex = ref(0);
@@ -53,17 +52,11 @@ onMounted(() => {
     overflow: hidden;
     position: relative;
     height: 100%;
-    &_TVinCON,
-    &_TV3840x2160 {
-        .banner-media {
-            object-fit: contain;
-        }
-    }
 }
 .banner-media {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     position: absolute;
 }
 .fade-enter-active,
